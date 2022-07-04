@@ -164,26 +164,27 @@ const getECPayment = asyncHandler(async (req, res) => {
          resultOrder += element.name+'#'
         });
         resultOrder = resultOrder.slice(0, -1)//get orderItem string
+        const total = Math.round(order.totalPrice).toString()
 
         let base_param = {
             MerchantTradeNo: create_UUID(20), //請帶20碼uid, ex: f0a0d7e9fae1bb72bc93
             MerchantTradeDate: onTimeValue(), //ex: 2017/02/13 15:45:30
-            TotalAmount: '2222',
-            TradeDesc: 'tradedesc',
-            ItemName: 'xyzz',
+            TotalAmount: total,   //
+            TradeDesc: order.paymentMethod,
+            ItemName: resultOrder,
             ReturnURL: 'https://meadowlark1984.herokuapp.com/REST/ecpay/returnResult',
             // ChooseSubPayment: '',
             // OrderResultURL: 'https://meadowlark1984.herokuapp.com/REST/ecpay/orderResult',
             // NeedExtraPaidInfo: 'Y',
             ClientBackURL: 'https://meadowlark1984.herokuapp.com',
             // ItemURL: 'https://meadowlark1984.herokuapp.com',
-            // Remark: 'This is Remark',
+            Remark: 'This is Remark',
             // HoldTradeAMT: '1',
             // StoreID: '',
-            // CustomField1: order.shippingAddress.address,
-            // CustomField2: order.shippingAddress.city,
-            // CustomField3: order.shippingAddress.postalCode,
-            // CustomField4: order.shippingAddress.country
+            CustomField1: order.shippingAddress.address,
+            CustomField2: order.shippingAddress.city,
+            CustomField3: order.shippingAddress.postalCode,
+            CustomField4: order.shippingAddress.country
             // Language: 'ENG'
         }
         let inv_params = {

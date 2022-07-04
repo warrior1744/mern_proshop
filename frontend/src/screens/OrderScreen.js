@@ -32,8 +32,6 @@ export const OrderScreen = () => {
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, loading, error} = orderDetails //current state of the details to show on the screen
 
-    //order.paymentMethod  <<< payment method info
-
     const orderPay = useSelector((state) => state.orderPay)
     const { loading: loadingPay, success: successPay} = orderPay
 
@@ -60,7 +58,6 @@ export const OrderScreen = () => {
         if(ecpaySuccess){
             //render ecpay.result page
             navigate('/ecpay')
-
         }
 
         const addPayPalScript = async () => {
@@ -89,7 +86,6 @@ export const OrderScreen = () => {
     }, [dispatch, orderId, successPay, order, successDeliver, ecpaySuccess])
 
     const successPaymentHandler = (paymentResult) => {
-        console.log(`paymentResult >>> ${JSON.stringify(paymentResult)}`)
         if(paymentResult.status === 'COMPLETED'){
             dispatch(payOrder(orderId, paymentResult))
         }else{
@@ -125,7 +121,7 @@ export const OrderScreen = () => {
 
     const getECPayHandler = () => {
 
-        dispatch(getECPayment(orderId))
+        dispatch(getECPayment(order._id))
     }
 
 
@@ -223,37 +219,43 @@ export const OrderScreen = () => {
                                         </Row>
                                     </ListGroup.Item>
                                     {!order.isPaid && (
-                                        <ListGroup.Item>
+                                        <>
                                             {loadingPay && <Loader type='orange' />}
-                                            {!sdkReady? <Loader type='green'/> : (
-                                                <PayPalButton amount={order.totalPrice}
-                                                    onSuccess={successPaymentHandler} />
-                                            )}
-                                        </ListGroup.Item>
+                                            <ListGroup.Item>
+                                                {order.paymentMethod==='PayPal' &&(
+                                                    !sdkReady? <Loader type='green'/> : (
+                                                        <PayPalButton amount={order.totalPrice}
+                                                        onSuccess={successPaymentHandler} />
+                                                        )
+                                                    )
+                                                }
+                                            </ListGroup.Item>
+
+                                            <ListGroup>
+                                                {order.paymentMethod==='ecPay' &&(
+                                                    <ListGroup.Item>
+                                                    <Row>
+                                                        <Col md={7}>
+                                                            <Image src='/images/ecpay.png' alt='ecpay' onClick={getECPayHandler}  fluid />
+                                                        </Col>
+                                                    </Row>
+                                                    </ListGroup.Item>
+                                                )}                                               
+                                            </ListGroup>
+                                        </>
                                     )}
                                     {loadingDeliver && <Loader type='blue'/>}
-                                {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                    {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                                     <ListGroup.Item>
                                         <Button type='button' className='btn btn-block' onClick={deliverHandler}>
                                             Mark As Delivered
                                         </Button>
                                     </ListGroup.Item>
-                                )}
+                                    )}
                                 </ListGroup>
                             </Card>
 
-                            <ListGroup>
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col md={7}>
-                            
-                                            <Image src='/images/ecpay.png' alt='ecpay' onClick={getECPayHandler}  fluid />
-            
-                                        </Col>
-                                    </Row>
 
-                                </ListGroup.Item>
-                            </ListGroup>
 
                             <ListGroup>
                                 <ListGroup.Item>

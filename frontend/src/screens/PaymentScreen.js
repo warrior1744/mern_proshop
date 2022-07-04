@@ -14,7 +14,7 @@ const PaymentScreen = () => {
 const dispatch = useDispatch()
 const navigate = useNavigate()
 
-const cart = useSelector(state => state.cart)
+const cart = useSelector(state => state.cart) //bugs appear here, cart info needs to be updated
 const { shippingAddress } = cart
 
 if(!shippingAddress){
@@ -26,6 +26,7 @@ const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
 const submitHandler = (e) => {
   e.preventDefault()
+  console.log(`paymentMethod >>> ${paymentMethod}`)
   dispatch(savePaymentMethod(paymentMethod))
   navigate('/placeorder')
 }

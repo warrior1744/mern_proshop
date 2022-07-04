@@ -14,6 +14,7 @@ import FormContainer from '../components/FormContainer'
 //route '/admin/product/:id/edit'
 const ProductEditScreen = () => {
 
+ 
     const params = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -33,11 +34,13 @@ const ProductEditScreen = () => {
     const productUpdate = useSelector((state) => state.productUpdate)
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
+
     useEffect(() => {
         if(successUpdate){
             dispatch({ type: PRODUCT_UPDATE_RESET })
             navigate('/admin/productlist')
         }else{
+            dispatch({ type: PRODUCT_UPDATE_RESET }) //clean the update message whenever user click to edit the product
             if(!product.name || product._id !== productId){
                 dispatch(listProductDetails(productId))
             }else{

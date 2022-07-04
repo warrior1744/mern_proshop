@@ -39,7 +39,8 @@ const submitHandler = (e) => {
               type='address'
               placeholder='Enter Address'
               value={address}
-              onChange={(e) => setAddress(e.target.value)}></Form.Control>
+              onChange={(e) => setAddress(e.target.value)}
+              required></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='city'>
@@ -48,7 +49,8 @@ const submitHandler = (e) => {
               type='city'
               placeholder='Enter City'
               value={city}
-              onChange={(e) => setCity(e.target.value)}></Form.Control>
+              onChange={(e) => setCity(e.target.value)}
+              required></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='postalCode'>
@@ -57,7 +59,8 @@ const submitHandler = (e) => {
               type='postalCode'
               placeholder='Enter PostalCode'
               value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}></Form.Control>
+              onChange={(e) => setPostalCode(e.target.value)}
+              required></Form.Control>
           </Form.Group>
 
           <Form.Group controlId='country'>
@@ -66,7 +69,8 @@ const submitHandler = (e) => {
               type='country'
               placeholder='Enter Country'
               value={country}
-              onChange={(e) => setCountry(e.target.value)}></Form.Control>
+              onChange={(e) => setCountry(e.target.value)}
+              required></Form.Control>
           </Form.Group>
 
           <Button type='submit' variant='primary'>

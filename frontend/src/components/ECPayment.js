@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState} from 'react'
+import React, { useRef, useEffect, useState} from 'react'
 import { Link, useParams} from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,9 +8,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
 import { updateProductQty} from '../actions/productActions'
-
-
-
+import parse from 'html-react-parser'
 
 
 
@@ -22,27 +20,24 @@ const ECPayment = () => {
 const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
 
 
+const contentRef = useRef()
 
-// useEffect(() => {
-//   const script = document.createElement('script')
-//   script.type = 'text/javascript'
-//   script.async = true
-//   script.src = ecpay.result
-//   document.body.appendChild(script)
+useEffect(() => {
+  const fragment = document.createRange().createContextualFragment(ecpay.result)
 
-//   return () => {
-//     document.body.removeChild(script)
-//   }
-
-// }, [])
+  if(contentRef.current){
+    contentRef.current.appendChild(fragment)
+  }else{
+    return
+  }
+})
 
 
   return (
 
 
-    <>
-     
-      </>
+    <div ref={contentRef}/>
+
     
   )
 }

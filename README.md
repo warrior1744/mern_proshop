@@ -546,5 +546,20 @@ Preparing for Deployment
 
 
 
+Bugs to be fixed:
+
+1. Shipping information needs to be filled in order to continue                         finished!
+2. remove other payment method when specific payment is chosen on OrderScreen Component finished!
+3. Edit Ecpay to pass order information rather than statics                             finished!
+
+4. When order is handled, quantity of product needs to be reduced.
+5. CartItems couldn't be updated when the stock items is out of stock. 
+   products need to be examined before the CartScreen. And cartItems need to be updated according to the products status.
+   (product removed or not, stocks and product details)
+6. 
+
+
+ECpay html string include script tag
 
 "<form id="_form_aiochk" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post"><input type="hidden" name="MerchantTradeNo" id="MerchantTradeNo" value="8b99c9a780ea8a78b8a8" /><input type="hidden" name="MerchantTradeDate" id="MerchantTradeDate" value="2022/07/01 10:57:16" /><input type="hidden" name="TotalAmount" id="TotalAmount" value="2222" /><input type="hidden" name="TradeDesc" id="TradeDesc" value="tradedesc" /><input type="hidden" name="ItemName" id="ItemName" value="xyzz" /><input type="hidden" name="ReturnURL" id="ReturnURL" value="https://meadowlark1984.herokuapp.com/REST/ecpay/returnResult" /><input type="hidden" name="ClientBackURL" id="ClientBackURL" value="https://meadowlark1984.herokuapp.com" /><input type="hidden" name="ChoosePayment" id="ChoosePayment" value="ALL" /><input type="hidden" name="PlatformID" id="PlatformID" value="" /><input type="hidden" name="MerchantID" id="MerchantID" value="2000132" /><input type="hidden" name="InvoiceMark" id="InvoiceMark" value="N" /><input type="hidden" name="IgnorePayment" id="IgnorePayment" value="" /><input type="hidden" name="DeviceSource" id="DeviceSource" value="" /><input type="hidden" name="EncryptType" id="EncryptType" value="1" /><input type="hidden" name="PaymentType" id="PaymentType" value="aio" /><input type="hidden" name="CheckMacValue" id="CheckMacValue" value="84499E54AE44AD3936DBA0E8DD90F84DE63EA9CEAB41B25859BE6A13D7B5F1EB" /><script type="text/javascript">document.getElementById("_form_aiochk").submit();</script></form>"
+
