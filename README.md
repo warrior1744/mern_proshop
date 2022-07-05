@@ -552,11 +552,26 @@ Deploying to Heroku
 1. check .env in gitignore, and /build folder
 2. register to Heroku and install Heroku Cli (type "heroku --versioin" to check )
 3. go to the project root folder, type "heroku login" 
-4. "heroku create [unique project name]" to create a project in your heroku account
+4. "heroku create [unique app name]" to create an app in your heroku account
 5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
+6. add environment variables to heroku before the deployment
+   execute the following commands
+
+   $ heroku config:set USE_NPM_INSTALL=true -a <Your app name>
+   $ heroku config:set NODE_MODULES_CACHE=false -a <Your app name>
+
+
+
 6. modify package.json script key 
       "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+7. "git add ." then "git commit" and "git push" to your own repository
+8. "heroku git:remote -a [your app name]"
+9. "git push heroku master"
+10. 
+
+
 5. add environment variable
+
 
 
 
