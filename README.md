@@ -560,14 +560,19 @@ Deploying to Heroku
    $ heroku config:set USE_NPM_INSTALL=true -a <Your app name>
    $ heroku config:set NODE_MODULES_CACHE=false -a <Your app name>
 
+7. modify package.json with engine version
 
+  "engines": {
+    "npm": "8.3.1",
+    "node": "^16.14.0"
+  },
 
-7. modify package.json script key 
+8. modify package.json script key 
       "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
-8. "git add ." then "git commit" and "git push" to your own repository
-9. "heroku git:remote -a [your app name]"
-10. "git push heroku master"
-11. 
+9. "git add ." then "git commit" and "git push" to your own repository
+10. "heroku git:remote -a [your app name]"
+11. "git push heroku master"
+12. 
 
 
 12. "heroku logs --tail" to check the status

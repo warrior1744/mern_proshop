@@ -43,5 +43,9 @@
   "bugs": {
     "url": "https://github.com/warrior1744/mern_proshop/issues"
   },
+  "engines": {
+    "npm": "8.3.1",
+    "node": "^16.14.0"
+  },
   "homepage": "https://github.com/warrior1744/mern_proshop#readme"
 }
