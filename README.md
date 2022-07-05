@@ -562,15 +562,15 @@ Deploying to Heroku
 
 
 
-6. modify package.json script key 
+7. modify package.json script key 
       "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
-7. "git add ." then "git commit" and "git push" to your own repository
-8. "heroku git:remote -a [your app name]"
-9. "git push heroku master"
-10. 
+8. "git add ." then "git commit" and "git push" to your own repository
+9. "heroku git:remote -a [your app name]"
+10. "git push heroku master"
+11. 
 
 
-5. add environment variable
+12. "heroku logs --tail" to check the status
 
 
 
