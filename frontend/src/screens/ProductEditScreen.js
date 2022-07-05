@@ -40,7 +40,7 @@ const ProductEditScreen = () => {
             dispatch({ type: PRODUCT_UPDATE_RESET })
             navigate('/admin/productlist')
         }else{
-            dispatch({ type: PRODUCT_UPDATE_RESET }) //clean the update message whenever user click to edit the product
+            // dispatch({ type: PRODUCT_UPDATE_RESET }) //clean the update message whenever user click to edit the product
             if(!product.name || product._id !== productId){
                 dispatch(listProductDetails(productId))
             }else{
@@ -69,6 +69,7 @@ const ProductEditScreen = () => {
         }
 
         const { data } = await axios.post('/api/upload', formData, config)
+        console.log(`image data >>> ${JSON.stringify(data)}`)
         setImage(data)
         setUploading(false)
       }catch (error){

@@ -1,12 +1,10 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
 import Product from '../models/productModel.js'
-
-// import { createRequire } from 'module';
-// const require = createRequire(import.meta.url);
-// const ecpay_payment = require('ecpay_aio_nodejs')
-
 import ecpay_payment from 'ecpay_aio_nodejs'
+
+
+
 
 // @desc Create new order (placeOrderHandler in PlaceOrderScreen Component)
 // @route POST /api/orders
@@ -188,28 +186,28 @@ const getECPayment = asyncHandler(async (req, res) => {
             // Language: 'ENG'
         }
         let inv_params = {
-            // RelateNumber: create_UUID(30),  //請帶30碼uid ex: SJDFJGH24FJIL97G73653XM0VOMS4K
-            // CustomerID: '',  //會員編號
-            // CustomerIdentifier: '42845993',   //統一編號
-            // CustomerName: '張帥帥',
-            // CustomerAddr: '海奧華住宅',
-            // CustomerPhone: '0975661440',
-            // CustomerEmail: 'warrior1744@gmail.com',
-            // ClearanceMark: '2',
-            // TaxType: '1',
-            // CarruerType: '', //must be 3 when CustomerID is not empty
-            // CarruerNum: '',
-            // Donation: '0',
-            // LoveCode: '1234567',
-            // Print: '1', //can not be 1 when CustomerID is not empty
-            // InvoiceItemName: '哥吉拉玩偶|拉面|亂馬|手機|包包',
-            // InvoiceItemCount: '1|3|1|2|9',
-            // InvoiceItemWord: '個|碗|組|支|個',
-            // InvoiceItemPrice: '35|10|100|2000|30000',
-            // InvoiceItemTaxType: '1|1|1|1|1',
-            // InvoiceRemark: '測哥吉拉玩偶的說明|拉面的說明|亂馬的說明|手機的說明|包包的說明',
-            // DelayDay: '0',
-            // InvType: '07'
+            RelateNumber: create_UUID(30),  //請帶30碼uid ex: SJDFJGH24FJIL97G73653XM0VOMS4K
+            CustomerID: '',  //會員編號
+            CustomerIdentifier: '42845993',   //統一編號
+            CustomerName: '張帥帥',
+            CustomerAddr: '海奧華住宅',
+            CustomerPhone: '0975661440',
+            CustomerEmail: 'warrior1744@gmail.com',
+            ClearanceMark: '2',
+            TaxType: '1',
+            CarruerType: '', //must be 3 when CustomerID is not empty
+            CarruerNum: '',
+            Donation: '0',
+            LoveCode: '1234567',
+            Print: '1', //can not be 1 when CustomerID is not empty
+            InvoiceItemName: '哥吉拉玩偶|拉面|亂馬|手機|包包',
+            InvoiceItemCount: '1|3|1|2|9',
+            InvoiceItemWord: '個|碗|組|支|個',
+            InvoiceItemPrice: '35|10|100|2000|30000',
+            InvoiceItemTaxType: '1|1|1|1|1',
+            InvoiceRemark: '測哥吉拉玩偶的說明|拉面的說明|亂馬的說明|手機的說明|包包的說明',
+            DelayDay: '0',
+            InvType: '07'
         }
         let ecpay = new ecpay_payment(options)
         let htm = ecpay.payment_client.aio_check_out_all(base_param,inv_params)
@@ -220,13 +218,14 @@ const getECPayment = asyncHandler(async (req, res) => {
     }
 })
 
-const routeTest = asyncHandler(async (req, res) => {
-  res.status(200)
-  res.type('text/plain')
-  res.send('this is a text test')
-//   res.json({result: 'succeed'})
+
+const getPaymentResult = asyncHandler(async (req, res) => {
+    const body = req.body
+    console.log(`received result >>> ${JSON.stringify(body)}`)
+
+
 })
 
 export {
-    addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders, updateOrderToDelivered, getECPayment, routeTest
+    addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders, updateOrderToDelivered, getECPayment, getPaymentResult
 }

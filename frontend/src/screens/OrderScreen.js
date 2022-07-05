@@ -111,6 +111,14 @@ export const OrderScreen = () => {
        
     }
 
+    const successECPaymentHandler = (paymentResult) => {
+        if(paymentResult.RtnMsg === '交易成功'){
+            console.log('transaction successful')
+        }else{
+            throw new Error('The ECPayment has failed')
+        }
+    }
+
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
     }

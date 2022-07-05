@@ -11,34 +11,26 @@ import { updateProductQty} from '../actions/productActions'
 import parse from 'html-react-parser'
 
 
-
-
 const ECPayment = () => {
 
-
   const ecpayScreen = useSelector((state) => state.orderECPayment)
-const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
+  const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
+  const contentRef = useRef()
 
+  useEffect(() => {
+    const fragment = document.createRange().createContextualFragment(ecpay.result)
 
-const contentRef = useRef()
-
-useEffect(() => {
-  const fragment = document.createRange().createContextualFragment(ecpay.result)
-
-  if(contentRef.current){
-    contentRef.current.appendChild(fragment)
-  }else{
-    return
-  }
-})
-
+    if(contentRef.current){
+      contentRef.current.appendChild(fragment)
+    }else{
+      return
+    }
+  })
 
   return (
 
-
     <div ref={contentRef}/>
 
-    
   )
 }
 
