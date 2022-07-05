@@ -572,10 +572,8 @@ Deploying to Heroku
 9. "git add ." then "git commit" and "git push" to your own repository
 10. "heroku git:remote -a [your app name]"
 11. "git push heroku master"
-12. 
-
-
-12. "heroku logs --tail" to check the status
+12. finally add the .dev variables to heroku in the app -> settings -> Config Vars
+13. "heroku logs --tail" to check the status
 
 
 

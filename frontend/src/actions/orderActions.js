@@ -220,8 +220,8 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
                     Authorization: `Bearer ${userInfo.token}`
                 }
             }
-            const {data} = await axios.post(`http://localhost:5000/api/orders/ecpay/${orderId}/payment`, {}, config)
-
+            const {data} = await axios.post(`/api/orders/ecpay/${orderId}/payment`, {}, config)
+            // const {data} = await axios.post(`http://localhost:5000/api/orders/ecpay/${orderId}/payment`, {}, config)
             dispatch({
                 type: ORDER_ECPAY_SUCCESS,
                 payload: data,
