@@ -1,5 +1,5 @@
 {
-  "name": "server.js",
+  "name": "jimshop1984",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
@@ -35,5 +35,13 @@
     "concurrently": "^7.2.1",
     "eslint": "^8.17.0",
     "nodemon": "^2.0.16"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warrior1744/mern_proshop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/warrior1744/mern_proshop/issues"
+  },
+  "homepage": "https://github.com/warrior1744/mern_proshop#readme"
 }
