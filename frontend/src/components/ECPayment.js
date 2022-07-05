@@ -8,7 +8,6 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
 import { updateProductQty} from '../actions/productActions'
-import parse from 'html-react-parser'
 
 
 const ECPayment = () => {

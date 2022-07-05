@@ -1,5 +1,5 @@
 {
-  "name": "jimshop1984",
+  "name": "server.js",
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "server.js",
@@ -12,6 +12,7 @@
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+
   },
   "author": "Jim chang",
   "license": "MIT",
@@ -36,16 +37,8 @@
     "eslint": "^8.17.0",
     "nodemon": "^2.0.16"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/warrior1744/mern_proshop.git"
-  },
-  "bugs": {
-    "url": "https://github.com/warrior1744/mern_proshop/issues"
-  },
   "engines": {
     "npm": "8.3.1",
     "node": "^16.14.0"
-  },
-  "homepage": "https://github.com/warrior1744/mern_proshop#readme"
+  }
 }
