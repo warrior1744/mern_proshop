@@ -22,7 +22,11 @@ import {
         ORDER_ECPAY_REQUEST,
         ORDER_ECPAY_FAIL,
         ORDER_ECPAY_SUCCESS,
-        ORDER_ECPAY_RESET
+        ORDER_ECPAY_RESET,
+        ORDER_ECPAY_RESULT_FAIL,
+        ORDER_ECPAY_RESULT_REQUEST,
+        ORDER_ECPAY_RESULT_RESET,
+        ORDER_ECPAY_RESULT_SUCCESS,
          } from '../constants/orderConstants'
 
 
@@ -235,6 +239,34 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
                     : error.message,
             })
         }
-
-
     }
+
+    export const getECPaymentResult = (orderId) => async(dispatch, getState) => {
+        try{
+            dispatch({
+                type: ORDER_ECPAY_RESULT_REQUEST,
+            })
+            const { userLogin: { userInfo }} = getState()
+            const config = {
+                headers:{
+                    'Content-Type':'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            }
+            const {data} = await axios.post(`/api/orders/ecpay/${orderId}/getPaymentResult`, {}, config)
+            dispatch({
+                type: ORDER_ECPAY_RESULT_SUCCESS,
+                payload: data,
+            })
+        }catch (error){
+            dispatch({
+                type: ORDER_ECPAY_RESULT_FAIL,
+                payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+            })
+        }
+    }
+
+    

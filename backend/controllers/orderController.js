@@ -170,11 +170,11 @@ const getECPayment = asyncHandler(async (req, res) => {
             TotalAmount: total,   //
             TradeDesc: order.paymentMethod,
             ItemName: resultOrder,
-            ReturnURL: 'https://jimshop1984.herokuapp.com/api/orders/ecpay/paymentResult',
+            ReturnURL: `https://jimshop1984.herokuapp.com/api/orders/ecpay/${order._id}/savePaymentResult`,
             // ChooseSubPayment: '',
             // OrderResultURL: 'https://meadowlark1984.herokuapp.com/REST/ecpay/orderResult',
             // NeedExtraPaidInfo: 'Y',
-            ClientBackURL: 'https://jimshop1984.herokuapp.com',
+            ClientBackURL: `https://jimshop1984.herokuapp.com/order/${order._id}`,
             // ItemURL: 'https://meadowlark1984.herokuapp.com',
             Remark: 'This is Remark',
             // HoldTradeAMT: '1',
@@ -219,13 +219,54 @@ const getECPayment = asyncHandler(async (req, res) => {
 })
 
 
-const getPaymentResult = asyncHandler(async (req, res) => {
+const savePaymentResult = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+
+
     const body = req.body
-    console.log(`received result >>> ${JSON.stringify(body)}`)
+    const paymentDetails = JSON.stringify(body)
+    console.log(paymentDetails)
 
+    // const order = await Order.findById(req.params.id)
 
+    // if(order){
+    //     order.isPaid = true
+    //     order.paidAt = Date.now()
+    //     order.paymentResult = {
+    //         id: req.body.id,
+    //         status: req.body.status,
+    //         update_time: req.body.update_time,
+    //         email_address: req.body.payer.email_address
+    //     }
+    //     const updatedOrder = await order.save()
+    //     res.json(updatedOrder)
+    // }else {
+    //     res.status(400)
+    //     throw new Error('payment failed')
+
+    // }
+})
+
+const getPaymentResult = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+
+    if(order){
+        res.json(order)
+
+    }else{
+        res.status(400)
+        throw new Error('payment not found')
+    }
 })
 
 export {
-    addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders, updateOrderToDelivered, getECPayment, getPaymentResult
+    addOrderItems,
+    getOrderById,
+    updateOrderToPaid,
+    getMyOrders,
+    getOrders,
+    updateOrderToDelivered,
+    getECPayment,
+    savePaymentResult,
+    getPaymentResult
 }

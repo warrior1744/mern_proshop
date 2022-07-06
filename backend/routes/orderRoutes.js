@@ -7,6 +7,7 @@ import { addOrderItems,
          getOrders,
          updateOrderToDelivered,
          getECPayment,
+         savePaymentResult,
          getPaymentResult } from '../controllers/orderController.js'
 import {protect, admin} from '../middleware/authMiddleware.js'
 
@@ -19,7 +20,8 @@ router.route('/:id/pay').put(protect, updateOrderToPaid) //update the order obje
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
 
 router.route('/ecpay/:id/payment').post(protect, getECPayment)
-router.route('/ecpay/paymentResult').post(protect, getPaymentResult)
+router.route('/ecpay/:id/savePaymentResult').post(savePaymentResult) //conducted by ECPay
+router.route('/ecpay/:id/getPaymentResult').get(protect, getPaymentResult)
 
 
 export default router

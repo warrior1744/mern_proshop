@@ -42,6 +42,7 @@ export const OrderScreen = () => {
     const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
 
     const [sdkReady, setSdkReady] = useState(false)
+    const [ecpayReady, setEcpayReady] = useState(false)
 
     if(!loading){
         const addDecimals = (num) => {

@@ -24,7 +24,11 @@ import { ORDER_CREATE_REQUEST,
          ORDER_ECPAY_FAIL,
          ORDER_ECPAY_REQUEST,
          ORDER_ECPAY_RESET,
-         ORDER_ECPAY_SUCCESS} from '../constants/orderConstants'
+         ORDER_ECPAY_SUCCESS,
+         ORDER_ECPAY_RESULT_FAIL,
+         ORDER_ECPAY_RESULT_REQUEST,
+         ORDER_ECPAY_RESULT_RESET,
+         ORDER_ECPAY_RESULT_SUCCESS} from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
     switch(action.type) {
@@ -182,6 +186,31 @@ export const getECPaymentReducer = (state = {}, action) => {
                 error: action.payload
             }
         case ORDER_ECPAY_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+//      POST /api/orders/ecpay/payment executed before POST /api/orders/ecpay/:id/paymentResult by ECPay 
+export const getECPaymentResultReducer = (state ={}, action) => { 
+    switch (action.type) {
+        case ORDER_ECPAY_RESULT_REQUEST:
+            return {
+                loading: true
+            }
+        case ORDER_ECPAY_RESULT_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+                ecpay: action.payload
+            }
+        case ORDER_ECPAY_RESULT_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case ORDER_ECPAY_RESULT_RESET:
             return {}
         default:
             return state
