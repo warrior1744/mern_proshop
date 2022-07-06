@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'development'){
 }
 
 app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
-//app.use(express.urlencoded())
+app.use(express.urlencoded())
 
 console.log(`__dirname >>> ${__dirname}`)
 
