@@ -178,7 +178,7 @@ export const getECPaymentReducer = (state = {}, action) => {
             return {
                 loading: false,
                 success: true,
-                ecpay: action.payload
+                ecpay: action.payload.result
             }
         case ORDER_ECPAY_FAIL:
             return {

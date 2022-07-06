@@ -56,11 +56,6 @@ export const OrderScreen = () => {
             navigate('/login')
         }
 
-        if(ecpaySuccess){
-            //render ecpay.result page
-            navigate('/ecpay')
-        }
-
         const addPayPalScript = async () => {
             const { data:clientId } = await axios.get('/api/config/paypal') //get clientId from env
             const script = document.createElement('script')
@@ -121,8 +116,10 @@ export const OrderScreen = () => {
     }
 
     const getECPayHandler = () => {
+
+
         dispatch(getECPayment(order._id))
-        dispatch(getECPaymentResult(order._id))
+        // dispatch(getECPaymentResult(order._id))
     }
 
 
