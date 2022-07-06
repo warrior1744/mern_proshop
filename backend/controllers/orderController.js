@@ -222,29 +222,25 @@ const getECPayment = asyncHandler(async (req, res) => {
 const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
 
-
     const body = req.body
     const paymentDetails = JSON.stringify(body)
     console.log(paymentDetails)
 
-    // const order = await Order.findById(req.params.id)
+    if(order){
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+            TradeNo: req.body.TradeNo,
+            RtnCode: req.body.RtnCode,
+            RtnMsg: req.body.RtnMsg,
+            PaymentDate: req.body.PaymentDate
+        }
+        await order.save()
+    }else {
+        res.status(400)
+        throw new Error('payment failed')
 
-    // if(order){
-    //     order.isPaid = true
-    //     order.paidAt = Date.now()
-    //     order.paymentResult = {
-    //         id: req.body.id,
-    //         status: req.body.status,
-    //         update_time: req.body.update_time,
-    //         email_address: req.body.payer.email_address
-    //     }
-    //     const updatedOrder = await order.save()
-    //     res.json(updatedOrder)
-    // }else {
-    //     res.status(400)
-    //     throw new Error('payment failed')
-
-    // }
+    }
 })
 
 const getPaymentResult = asyncHandler(async (req, res) => {

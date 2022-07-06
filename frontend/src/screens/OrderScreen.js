@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
+import { getOrderDetails, payOrder, deliverOrder, getECPayment, getECPaymentResult} from '../actions/orderActions'
 import { updateProductQty} from '../actions/productActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
 import { CART_EMPTY_ITEM} from '../constants/cartConstants'
@@ -112,14 +112,6 @@ export const OrderScreen = () => {
        
     }
 
-    const successECPaymentHandler = (paymentResult) => {
-        if(paymentResult.RtnMsg === '交易成功'){
-            console.log('transaction successful')
-        }else{
-            throw new Error('The ECPayment has failed')
-        }
-    }
-
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
     }
@@ -129,8 +121,8 @@ export const OrderScreen = () => {
     }
 
     const getECPayHandler = () => {
-
         dispatch(getECPayment(order._id))
+        dispatch(getECPaymentResult(order._id))
     }
 
 
