@@ -23,8 +23,7 @@ import { orderCreateReducer,
          orderListMyReducer,
          orderListReducer,
          orderDeliverReducer,
-         getECPaymentReducer,
-         getECPaymentResultReducer} from './reducers/orderReducers'
+         getECPaymentReducer} from './reducers/orderReducers'
 
 const reducer = combineReducers({
     productList: productListReducer,
@@ -49,8 +48,7 @@ const reducer = combineReducers({
     orderListMy: orderListMyReducer,
     orderList: orderListReducer,
     orderDeliver: orderDeliverReducer,
-    orderECPayment: getECPaymentReducer,
-    orderECpaymentResult: getECPaymentResultReducer
+    orderECPayment: getECPaymentReducer
 }) //reducers for products , cart, users and orders
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') 

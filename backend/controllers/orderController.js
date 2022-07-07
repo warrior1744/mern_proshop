@@ -255,15 +255,6 @@ const savePaymentResult = asyncHandler(async (req, res) => {
     }
 })
 
-const getPaymentResult = asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id)
-    if(order){
-        res.json(order)
-    }else{
-        res.status(400)
-        throw new Error('payment not found')
-    }
-})
 
 export {
     addOrderItems,
@@ -273,6 +264,5 @@ export {
     getOrders,
     updateOrderToDelivered,
     getECPayment,
-    savePaymentResult,
-    getPaymentResult
+    savePaymentResult
 }

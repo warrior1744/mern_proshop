@@ -192,27 +192,3 @@ export const getECPaymentReducer = (state = {}, action) => {
     }
 }
 
-//      POST /api/orders/ecpay/payment executed before POST /api/orders/ecpay/:id/paymentResult by ECPay 
-export const getECPaymentResultReducer = (state ={}, action) => { 
-    switch (action.type) {
-        case ORDER_ECPAY_RESULT_REQUEST:
-            return {
-                loading: true
-            }
-        case ORDER_ECPAY_RESULT_SUCCESS:
-            return {
-                loading: false,
-                success: true,
-                ecpay: action.payload
-            }
-        case ORDER_ECPAY_RESULT_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
-        case ORDER_ECPAY_RESULT_RESET:
-            return {}
-        default:
-            return state
-    }
-}
