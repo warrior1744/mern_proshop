@@ -237,16 +237,17 @@ const getECPayment = asyncHandler(async (req, res) => {
 const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
     const body = req.body
-    const paymentDetails = JSON.stringify(body)
-    console.log(`ECPayment Details >>> ${paymentDetails}`)
+
+    console.log(`ECPayment Details >>> ${body}`)
     if(order && req.body.RtnMsg === '交易成功'){
         order.isPaid = true
         order.paidAt = Date.now()
         order.paymentResult = {
-            TradeNo: req.body.TradeNo, //bugs no data can be read
-            RtnCode: req.body.RtnCode,
-            RtnMsg: req.body.RtnMsg,
-            PaymentDate: req.body.PaymentDate
+            body
+            // TradeNo: req.body.TradeNo, //bugs no data can be read
+            // RtnCode: req.body.RtnCode,
+            // RtnMsg: req.body.RtnMsg,
+            // PaymentDate: req.body.PaymentDate
         }
         await order.save()
     }else {
