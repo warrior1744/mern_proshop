@@ -38,12 +38,13 @@ export const OrderScreen = () => {
     const orderDeliver = useSelector((state) => state.orderDeliver)
     const { loading: loadingDeliver, success: successDeliver} = orderDeliver
 
-    // const ecpayScreen = useSelector((state) => state.orderECPayment)
-    // const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
+    const ecpayScreen = useSelector((state) => state.orderECPayment)
+    const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
 
     const [sdkReady, setSdkReady] = useState(false)
+    const [ecpayReady, setEcpayReady] = useState(false)
 
-    if(!loading){ //PayPal state
+    if(!loading){
         const addDecimals = (num) => {
             return (Math.round(num * 100)/ 100).toFixed(2)
         }
@@ -78,7 +79,7 @@ export const OrderScreen = () => {
                 setSdkReady(true)
             }
         }
-    }, [dispatch, orderId, successPay, order, successDeliver])
+    }, [dispatch, orderId, successPay, order, successDeliver, ecpaySuccess])
 
     const successPaymentHandler = (paymentResult) => {
         if(paymentResult.status === 'COMPLETED'){
