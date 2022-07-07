@@ -108,12 +108,19 @@ const getOrders = asyncHandler(async (req, res) => {
         }
     }: {}
     
-    const count = await Product.countDocuments({...keyword})
-    const orders = await Order.find({...keyword}).populate({
+    const count = await Order.countDocuments({...keyword})
+    
+    const orders = await Order.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1)).populate({
         path: 'user',
         select: 'id name email'
-    }).limit(pageSize).skip(pageSize * (page - 1))
-    res.json({orders, page, pages: Math.ceil(count / pageSize)})
+    })
+    const orderList = {
+        orders,
+        page,
+        pages: Math.ceil(count/pageSize)
+    }
+    
+    res.json(orderList)
 })
 
 
@@ -236,7 +243,7 @@ const savePaymentResult = asyncHandler(async (req, res) => {
         order.isPaid = true
         order.paidAt = Date.now()
         order.paymentResult = {
-            TradeNo: req.body.TradeNo,
+            TradeNo: req.body.TradeNo, //bugs no data can be read
             RtnCode: req.body.RtnCode,
             RtnMsg: req.body.RtnMsg,
             PaymentDate: req.body.PaymentDate

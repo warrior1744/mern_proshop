@@ -30,7 +30,7 @@ export const PlaceOrderScreen = () => {
     useEffect(() => {
        
         if(success){
-            dispatch(updateProductQty( order._id))
+            // dispatch(updateProductQty( order._id))
             dispatch({ type: CART_EMPTY_ITEM})
             dispatch({ type: ORDER_CREATE_RESET})//when the order is created, reset it          
             navigate(`/order/${order._id}`)

@@ -120,8 +120,6 @@ export const OrderScreen = () => {
     }
 
     const getECPayHandler = () => {
-
-
         dispatch(getECPayment(order._id))
         // dispatch(getECPaymentResult(order._id))
     }

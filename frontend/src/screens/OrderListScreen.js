@@ -14,7 +14,7 @@ import Paginate from '../components/Paginate'
 
 const OrderListScreen = () => {
 
-  const pageNumber = useParams().pagenumber || 1
+  const pageNumber = useParams().pageNumber || 1
   
   const dispatch = useDispatch()
   const navigate = useNavigate()
