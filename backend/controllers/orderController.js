@@ -238,7 +238,7 @@ const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
     const body = req.body
     const paymentDetails = JSON.stringify(body)
-    console.log(paymentDetails)
+    console.log(`ECPayment Details >>> ${paymentDetails}`)
     if(order && req.body.RtnMsg === '交易成功'){
         order.isPaid = true
         order.paidAt = Date.now()
