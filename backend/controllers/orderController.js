@@ -61,7 +61,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 })
 
 // @desc Update order to paid
-// @route GET /api/orders/:id/pay
+// @route PUT /api/orders/:id/pay
 // @access Private
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
@@ -118,7 +118,7 @@ const getOrders = asyncHandler(async (req, res) => {
 
 
 // @desc Update order to delivered
-// @route GET /api/orders/:id/deliver
+// @route PUT /api/orders/:id/deliver
 // @access Private
 
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
@@ -146,12 +146,15 @@ function barcode_generator(){var barcode ='/' + create_UUID(7);return barcode}
 const onTimeValue = function () {
     var date = new Date();var mm = date.getMonth() + 1;var dd = date.getDate();var hh = date.getHours();var mi = date.getMinutes();var ss = date.getSeconds();
     return [date.getFullYear(), "/" + (mm > 9 ? '' : '0') + mm, "/" + (dd > 9 ? '' : '0') + dd, " " + (hh > 9 ? '' : '0') + hh, ":" + (mi > 9 ? '' : '0') + mi, ":" + (ss > 9 ? '' : '0') + ss].join('');};
-        //Test Credit Card 4311-9522-2222-2222
-        //Valid  12/25
-        //Secure  222
+
 // @desc Update order to delivered
 // @route POST /api/orders/ecpay/:id/payment
 // @access Private
+// @desc when done successfuly ,will create html string and scrip tag data and return to the frontend
+// @usage use these following test input when neccessary
+        //Test Credit Card 4311-9522-2222-2222
+        //Valid  12/25
+        //Secure  222
 const getECPayment = asyncHandler(async (req, res) => {
 
     const options = JSON.parse(process.env.ECPAY_OPTIONS)
@@ -218,15 +221,18 @@ const getECPayment = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc Save order information to the database
+// @route POST /api/orders/ecpay/:id/savePaymentResult
+// @access Public
+// @desc When POST /api/orders/ecpay/:id/payment called and the returned page is submitted
+//       the ECpay server sends POST to the url as we passed the params with the ReturnURL
 
 const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
-
     const body = req.body
     const paymentDetails = JSON.stringify(body)
     console.log(paymentDetails)
-
-    if(order){
+    if(order && req.body.RtnMsg === '交易成功'){
         order.isPaid = true
         order.paidAt = Date.now()
         order.paymentResult = {
@@ -238,17 +244,14 @@ const savePaymentResult = asyncHandler(async (req, res) => {
         await order.save()
     }else {
         res.status(400)
-        throw new Error('payment failed')
-
+        throw new Error('ECPayment failed')
     }
 })
 
 const getPaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
-
     if(order){
         res.json(order)
-
     }else{
         res.status(400)
         throw new Error('payment not found')
