@@ -56,6 +56,10 @@ export const OrderScreen = () => {
             navigate('/login')
         }
 
+        if(ecpaySuccess){
+            navigate('/ecpay')
+        }
+
         const addPayPalScript = async () => {
             const { data:clientId } = await axios.get('/api/config/paypal') //get clientId from env
             const script = document.createElement('script')
