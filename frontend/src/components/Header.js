@@ -4,7 +4,6 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import SearchBox from './SearchBox'
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 const Header = () => {
 
@@ -15,14 +14,6 @@ const { userInfo } = userLogin
 const logoutHandler = () => {
   dispatch(logout())
 }
-
-useEffect(()=> {
-
-
-  
-})
-
-
 
   return (
     <header>

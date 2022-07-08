@@ -29,6 +29,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
             orderItems,
             user: req.user._id,  //remember the authMiddleware saves token and req.user
             shippingAddress,
+            paymentResult:{id:'',status:'', update_time:'', email_address:''},
             paymentMethod,
             itemsPrice,
             taxPrice,
@@ -236,9 +237,7 @@ const getECPayment = asyncHandler(async (req, res) => {
 
 const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
-    const body = req.body
 
-    console.log(`ECPayment Details >>> ${JSON.stringify(body)}`)
     if(order && req.body.RtnMsg === '交易成功'){
         order.isPaid = true
         order.paidAt = Date.now()
@@ -249,6 +248,7 @@ const savePaymentResult = asyncHandler(async (req, res) => {
             email_address: ''
         }
         await order.save()
+
     }else {
         res.status(400)
         throw new Error('ECPayment failed')

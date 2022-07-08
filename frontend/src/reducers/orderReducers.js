@@ -18,17 +18,13 @@ import { ORDER_CREATE_REQUEST,
          ORDER_DELIVER_REQUEST,
          ORDER_DELIVER_SUCCESS,
          ORDER_DELIVER_FAIL,
-         ORDER_DELIVER_RESET,
          ORDER_CREATE_RESET,
          ORDER_DETAILS_RESET,
          ORDER_ECPAY_FAIL,
          ORDER_ECPAY_REQUEST,
          ORDER_ECPAY_RESET,
          ORDER_ECPAY_SUCCESS,
-         ORDER_ECPAY_RESULT_FAIL,
-         ORDER_ECPAY_RESULT_REQUEST,
-         ORDER_ECPAY_RESULT_RESET,
-         ORDER_ECPAY_RESULT_SUCCESS} from '../constants/orderConstants'
+    } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
     switch(action.type) {
@@ -177,7 +173,6 @@ export const getECPaymentReducer = (state = {}, action) => {
         case ORDER_ECPAY_SUCCESS:
             return {
                 loading: false,
-                success: true,
                 ecpay: action.payload
             }
         case ORDER_ECPAY_FAIL:

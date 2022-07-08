@@ -8,7 +8,6 @@ import {
         ORDER_DETAILS_SUCCESS,
         ORDER_PAY_FAIL,
         ORDER_PAY_REQUEST,
-        ORDER_PAY_RESET,
         ORDER_PAY_SUCCESS,
         ORDER_LIST_MY_FAIL,
         ORDER_LIST_MY_SUCCESS,
@@ -22,11 +21,6 @@ import {
         ORDER_ECPAY_REQUEST,
         ORDER_ECPAY_FAIL,
         ORDER_ECPAY_SUCCESS,
-        ORDER_ECPAY_RESET,
-        ORDER_ECPAY_RESULT_FAIL,
-        ORDER_ECPAY_RESULT_REQUEST,
-        ORDER_ECPAY_RESULT_RESET,
-        ORDER_ECPAY_RESULT_SUCCESS,
          } from '../constants/orderConstants'
 
 

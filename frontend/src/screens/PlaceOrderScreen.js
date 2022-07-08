@@ -6,10 +6,9 @@ import Header from '../components/Header'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
-import { updateProductQty } from '../actions/productActions'
+import { emptyCart } from '../actions/cartActions'
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
-import { CART_EMPTY_ITEM} from '../constants/cartConstants'
-import { PRODUCT_UPDATE_QTY_RESET} from '../constants/productConstants'
+
 
 //route '/placeorder'
 export const PlaceOrderScreen = () => {
@@ -30,8 +29,7 @@ export const PlaceOrderScreen = () => {
     useEffect(() => {
        
         if(success){
-            // dispatch(updateProductQty( order._id))
-            dispatch({ type: CART_EMPTY_ITEM})
+            dispatch(emptyCart())
             dispatch({ type: ORDER_CREATE_RESET})//when the order is created, reset it          
             navigate(`/order/${order._id}`)
         }

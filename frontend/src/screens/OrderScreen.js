@@ -11,7 +11,6 @@ import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
 import { updateProductQty} from '../actions/productActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
-import { CART_EMPTY_ITEM} from '../constants/cartConstants'
 import { ORDER_ECPAY_RESET} from '../constants/orderConstants'
 import { Redirect } from 'react-router-dom'
 
@@ -39,10 +38,9 @@ export const OrderScreen = () => {
     const { loading: loadingDeliver, success: successDeliver} = orderDeliver
 
     const ecpayScreen = useSelector((state) => state.orderECPayment)
-    const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
+    const { loading: ecpayLoading, ecpay} = ecpayScreen
 
     const [sdkReady, setSdkReady] = useState(false)
-    const [ecpayReady, setEcpayReady] = useState(false)
 
     if(!loading){
         const addDecimals = (num) => {
@@ -56,7 +54,7 @@ export const OrderScreen = () => {
             navigate('/login')
         }
 
-        if(ecpaySuccess){
+        if(ecpay){
             navigate('/ecpay')
         }
 
@@ -76,39 +74,33 @@ export const OrderScreen = () => {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch(getOrderDetails(orderId))
-        }else if(!order.isPaid){
+        }else if(order.paymentMethod === 'PayPal' && !order.isPaid){
             if(!window.paypal){
                 addPayPalScript()
             }else{
                 setSdkReady(true)
             }
-        }
-    }, [dispatch, orderId, successPay, order, successDeliver, ecpaySuccess])
+        }else if(order.paymentMethod === 'ecPay' && order.paymentResult.status === '交易成功'){
+            
+            
 
-    const successPaymentHandler = (paymentResult) => {
+        }
+
+    
+
+        
+
+        
+
+        
+    }, [dispatch, orderId, successPay, order, successDeliver, ecpay])
+
+    const successPaymentHandler = (paymentResult) => { //Paypal returned message, please check README.md
         if(paymentResult.status === 'COMPLETED'){
             dispatch(payOrder(orderId, paymentResult))
         }else{
             throw new Error('The payment has failed')
-        }
-        // The return paymentResult information >>> {
-        // create_time: "2022-06-22T08:21:27Z"
-        // id: "9G347725GY476814C"
-        // intent: "CAPTURE"
-        // links: [{…}]
-        // payer:
-        // address: {country_code: 'US'}
-        // email_address: "sb-bze6217163584@personal.example.com"
-        // name: {given_name: 'John', surname: 'Doe'}
-        // payer_id: "J2HB3MJVQJT4Q"
-        // [[Prototype]]: Object
-        // purchase_units: Array(1)
-        // 0: {reference_id: 'default', amount: {…}, payee: {…}, shipping: {…}, payments: {…}}
-        // length: 1
-        // [[Prototype]]: Array(0)
-        // status: "COMPLETED"
-        // update_time: "2022-06-22T08:22:33Z" }
-       
+        }      
     }
 
     const deliverHandler = () => {
@@ -121,7 +113,6 @@ export const OrderScreen = () => {
 
     const getECPayHandler = () => {
         dispatch(getECPayment(order._id))
-
     }
 
 

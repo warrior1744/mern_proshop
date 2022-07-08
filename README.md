@@ -615,3 +615,25 @@ ECpay html string include script tag
    "TradeNo":"2207061653564471",
    "CheckMacValue":"4C1D2C4E52465D3F51D946C47B2ECBE3A09827583533A280FFA736C34ECC058B"
  } -->
+
+
+
+<!-- PayPal returned message
+
+        // {
+        // create_time: "2022-06-22T08:21:27Z"
+        // id: "9G347725GY476814C"
+        // intent: "CAPTURE"
+        // links: [{…}]
+        // payer:
+        // address: {country_code: 'US'}
+        // email_address: "sb-bze6217163584@personal.example.com"
+        // name: {given_name: 'John', surname: 'Doe'}
+        // payer_id: "J2HB3MJVQJT4Q"
+        // [[Prototype]]: Object
+        // purchase_units: Array(1)
+        // 0: {reference_id: 'default', amount: {…}, payee: {…}, shipping: {…}, payments: {…}}
+        // length: 1
+        // [[Prototype]]: Array(0)
+        // status: "COMPLETED"
+        // update_time: "2022-06-22T08:22:33Z" } -->
