@@ -6,7 +6,6 @@ import Header from '../components/Header'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
-import { emptyCart } from '../actions/cartActions'
 import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 
 
@@ -29,7 +28,6 @@ export const PlaceOrderScreen = () => {
     useEffect(() => {
        
         if(success){
-            dispatch(emptyCart())
             dispatch({ type: ORDER_CREATE_RESET})//when the order is created, reset it          
             navigate(`/order/${order._id}`)
         }

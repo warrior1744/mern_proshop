@@ -1,6 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types' 
-
 
 
 export const Rating = ({value, text, color}) => {
@@ -70,14 +68,10 @@ export const Rating = ({value, text, color}) => {
 Rating.defaultProps = {
   color:'#F4F440'
   
-  }
+}
 
 
 //We imported as PropTypes But while using with a React component. 
 //we use it with smaller case propTypes
-Rating.propTypes = {
-    value: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
-    color: PropTypes.string
-}
+
 export default Rating

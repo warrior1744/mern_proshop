@@ -2,8 +2,8 @@ Tip: using npm to install react boilerplate codes
 1. switch to your working directory for react (ex. ./frontend)
 2. run 'npx create-react-app frontend'
 3. after completed install, run 'npm start'
-   Using ES7 React/Redux extension shortcut
 
+   Using ES7 React/Redux extension shortcut
 1. 'rafce'   React Arrow Function Components Export
 2. CSS link added to index.html
 

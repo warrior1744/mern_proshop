@@ -1,6 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
-// import React from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Header from './components/Header'

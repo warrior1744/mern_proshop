@@ -12,11 +12,11 @@ const getProducts = asyncHandler (async (req, res) => {
     if(OnAdminProductListScreen === 'true'){
         pageSize = 12
     }else{
-        pageSize = 6
+        pageSize = 8
     }
-   
     const page = Number(req.query.pageNumber) || 1
-    const keyword = req.query.keyword ? {
+    const keyword = req.query.keyword 
+        ? {
          //https://www.mongodb.com/docs/manual/reference/operator/query/regex/
         "$or": [
             {name: { 
@@ -27,11 +27,12 @@ const getProducts = asyncHandler (async (req, res) => {
                 $regex: req.query.keyword,
                 $options:'im'
             }}
-        ]
-    } : {}
-
+        ]} 
+        : {}
     const count = await Product.countDocuments({ ...keyword}) // query context >>> {"name":{"$regex":"xxx","$options":"i"}}
-    const products = await Product.find({ ...keyword }).limit(pageSize).skip(pageSize * (page-1))//if page is 1, then skip none and so on
+    const products = await Product.find({ ...keyword })
+        .limit(pageSize)
+        .skip(pageSize * (page-1))//if page is 1, then skip none and so on
 
     res.json({products, page, pages: Math.ceil(count / pageSize)})
 })

@@ -20,11 +20,17 @@ import uploadRoutes from './routes/uploadRoutes.js'
 import { notFound, errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
+dotenv.config()
+connectDB()
 const app = express()
 
-dotenv.config()
+if (process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'))
+}
 
-connectDB()
+app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
+app.use(express.urlencoded({extended: false}))
+
 app.use('/api', cors())//chapter15
 
 const __dirname = path.resolve() // D:\Dropbox\Dev\WebDev\MERN_E-commerce\proshop
@@ -35,14 +41,6 @@ app.engine('handlebars', engine({  //configure Handlebars view engine by specifi
 app.set('view cache', true)
 app.set('views', path.join(__dirname, 'backend/views'));
 app.set('view engine', 'handlebars')
-
-if (process.env.NODE_ENV === 'development'){
-    app.use(morgan('dev'))
-}
-
-app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
-app.use(express.urlencoded({extended: false}))
-
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
@@ -69,4 +67,7 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 //please see .env file on the root folder
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))
+app.listen(
+    PORT,
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
+)

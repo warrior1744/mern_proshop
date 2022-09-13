@@ -19,7 +19,7 @@ const RegisterScreen = () => {
 
     const navigate = useNavigate()
     const queryRedirect = useLocation().search //possible output: ?redirect=shipping
-    const redirect = queryRedirect ? queryRedirect.split('=')[1] : '/' //possible output: shipping
+    const redirect = queryRedirect ? queryRedirect.split('=')[1] : '' //possible output: shipping
 
     const dispatch = useDispatch()
     const userRegister = useSelector(state => state.userRegister)

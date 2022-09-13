@@ -24,23 +24,27 @@ const ProductScreen = () => {
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
-    const productDetails = useSelector(state => state.productDetails)
+    const productDetails = useSelector((state) => state.productDetails)
     const { loading, error, product} = productDetails
 
     const productReviewCreate = useSelector(state => state.productReviewCreate)
-    const { loading: loadingProductReview, error: errorProductReview, success:successProductReview} = productReviewCreate
+    const { loading: loadingProductReview, 
+            error: errorProductReview, 
+            success:successProductReview
+          } = productReviewCreate
 
 
     useEffect(() => {
-
         if(successProductReview){
-            console.log('Review submitted')
             setRating(0)
             setComment('')
+        }
+        //if the product._id is the same, we would not dispatch the action again
+        //if its not the same, we dispatch (update) the product details
+        if(!product._id || product._id !== id) {
+            dispatch(listProductDetails(id))
             dispatch({ type: PRODUCT_CREATE_REVIEW_RESET})
         }
-
-        dispatch(listProductDetails(id))
       }, [dispatch, id, successProductReview])
 
     const addToCartHandler = () => {
@@ -51,7 +55,6 @@ const ProductScreen = () => {
         e.preventDefault()
         dispatch(createProductReview(id, { rating, comment}))
     }
-
 
   return(
     <>
@@ -76,7 +79,7 @@ const ProductScreen = () => {
                         <Rating value={product.rating} text={`${product.numReviews} Reviews`}/>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        Price: {product.price}
+                        Price: ${product.price}
                     </ListGroup.Item>
                     <ListGroup.Item>
                         Description: {product.description}
@@ -144,22 +147,37 @@ const ProductScreen = () => {
                     <h2>Reviews</h2>
                     {product.reviews.length === 0 && <Message> no reviews</Message>}
                     <ListGroup variant='flush'>
-                        {product.reviews.map(review => (
+                        {product.reviews.map((review) => (
                             <ListGroup.Item key={review._id}>
                                 <strong>{review.name}</strong>
-                                <Rating value={review.rating} />
+                                <Rating value={review.rating}/>
                                 <p>{review.createdAt.substring(0, 10)}</p>
                                 <p>{review.comment}</p>
                             </ListGroup.Item>
                         ))}
                         <ListGroup.Item>
                             <h2>Write a customer review</h2>
-                            {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
+                            {successProductReview && (
+                                <Message variant='success'>
+                                    Review submitted successfully
+                                </Message>
+                            )}
+                            {loadingProductReview && <Loader />}
+                            {errorProductReview && (
+                                <Message variant='danger'>
+                                    {errorProductReview}
+                                </Message>
+                            )}
+
                             {userInfo ?  (
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group controlId='rating'>
                                         <Form.Label>Rating</Form.Label>
-                                        <Form.Control as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
+                                        <Form.Control 
+                                            as='select' 
+                                            value={rating} 
+                                            onChange={(e) => setRating(e.target.value)}
+                                        >
                                             <option value=''>Select...</option>
                                             <option value='1'>1 - Poor</option>
                                             <option value='2'>2 - Fair</option>
@@ -170,13 +188,25 @@ const ProductScreen = () => {
                                     </Form.Group>
                                     <Form.Group controlId='comment'>
                                         <Form.Label>Comment</Form.Label>
-                                        <Form.Control as='textarea' row='4' value={comment} onChange={(e) => setComment(e.target.value)}>
+                                        <Form.Control 
+                                            as='textarea' 
+                                            row='4' 
+                                            value={comment} 
+                                            onChange={(e) => setComment(e.target.value)}>
                                         </Form.Control>
                                     </Form.Group>
-                                    <Button type='submit' variant='primary'>Submit</Button>
+                                    <Button 
+                                        disabled={loadingProductReview}
+                                        type='submit'
+                                        variant='primary'
+                                    >
+                                        Submit
+                                    </Button>
                                 </Form>
                             ) : (
-                            <Message>Please <Link to='/login'>Sign In</Link> to write a review {' '}</Message>
+                            <Message>
+                                Please <Link to='/login'>Sign In</Link> to write a review {' '}
+                            </Message>
                             )}
                         </ListGroup.Item>
                     </ListGroup>

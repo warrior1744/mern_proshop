@@ -26,7 +26,6 @@ const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
 const submitHandler = (e) => {
   e.preventDefault()
-  console.log(`paymentMethod >>> ${paymentMethod}`)
   dispatch(savePaymentMethod(paymentMethod))
   navigate('/placeorder')
 }

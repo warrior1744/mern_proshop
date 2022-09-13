@@ -216,7 +216,8 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
                 headers:{
                     'Content-Type':'application/json',
                     Authorization: `Bearer ${userInfo.token}`
-                }
+                },
+                timeout:10000,
             }
             const {data} = await axios.post(`/api/orders/ecpay/${orderId}/payment`, {}, config)
 

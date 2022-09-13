@@ -38,7 +38,10 @@ export const listProducts = (keyword = '', pageNumber = '', OnAdminProductListSc
     } catch (error) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+            payload: 
+                error.response && error.response.data.message
+                   ? error.response.data.message
+                   : error.message,
         })
     }
 }
@@ -169,7 +172,6 @@ export const listTopProducts = () => async (dispatch) => {
 
 export const updateProductQty = (productId, cancelOrder = {}) => async (dispatch, getState) => {
     try{
-        console.log(`cancelOrder >>> ${JSON.stringify(cancelOrder)}`)
         dispatch({ type: PRODUCT_UPDATE_QTY_REQUEST})
         const { userLogin: {userInfo}, } = getState()
         const config = { headers: {

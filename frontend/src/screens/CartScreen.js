@@ -20,7 +20,6 @@ const CartScreen = () => {
   const { cartItems } = cart
   
   useEffect(() => {
-    console.log(`CartScreen useEffect runs...`)
     if(productId){
       dispatch(addToCart(productId, qty))
     }

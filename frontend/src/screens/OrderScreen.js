@@ -13,6 +13,7 @@ import { updateProductQty} from '../actions/productActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
 import { ORDER_ECPAY_RESET} from '../constants/orderConstants'
 import { Redirect } from 'react-router-dom'
+import { emptyCart } from '../actions/cartActions'
 
 
 //route '/order/:id'
@@ -23,7 +24,6 @@ export const OrderScreen = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -71,6 +71,7 @@ export const OrderScreen = () => {
         }
 
         if(!order || successPay || order._id !== orderId || successDeliver){ //we also need to check if the details is passed by ProfileScreen that might be different
+            // dispatch(emptyCart())
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch(getOrderDetails(orderId))
@@ -81,18 +82,10 @@ export const OrderScreen = () => {
                 setSdkReady(true)
             }
         }else if(order.paymentMethod === 'ecPay' && order.paymentResult.status === '交易成功'){
-            
-            
-
+            dispatch(updateProductQty(orderId, {cancelRequest: false}))
+            dispatch(emptyCart())
         }
 
-    
-
-        
-
-        
-
-        
     }, [dispatch, orderId, successPay, order, successDeliver, ecpay])
 
     const successPaymentHandler = (paymentResult) => { //Paypal returned message, please check README.md
@@ -108,7 +101,7 @@ export const OrderScreen = () => {
     }
 
     const cancelOrderHandler = () => {
-        dispatch(updateProductQty(orderId, {cancelRequest: true}))
+        navigate('/cart')
     }
 
     const getECPayHandler = () => {
