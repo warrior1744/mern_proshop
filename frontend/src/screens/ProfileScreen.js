@@ -34,8 +34,6 @@ const ProfileScreen = () => {
     const orderListMy = useSelector(state => state.orderListMy)
     const { loading: loadingOrders, error: errorOrders, orders} = orderListMy
 
-    console.log(JSON.stringify(orders))
-
     useEffect(() => {
         if (!userInfo){
             navigate('/login')

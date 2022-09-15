@@ -170,37 +170,24 @@ const getTopProducts = asyncHandler(async (req, res) => {
 })
 
 
-
+// Improvement 2
 // @desc Update product qty
 // @route POST /api/products/qty/:id
 // @access private
 
 const updateProductQty = asyncHandler(async (req, res)=> {
-    const orderId = await Order.findById(req.params.id)
-    const { cancelRequest } = req.body // cancellOrder = { cancelRequest : boolean}
- 
-
-    if(!cancelRequest){
-        orderId.orderItems.forEach(async item => {
-            const orderItem = await Product.findById(item.product)
-        
-            if(orderItem){
-                orderItem.countInStock = orderItem.countInStock - item.qty
-                await orderItem.save()
+    const order = await Order.findById(req.params.id)
+    if(order){
+        order.orderItems.forEach(async item => { //iterate each product
+            //get the product vault
+            const productItem = await Product.findById(item.product)
+            if(productItem){
+                productItem.countInStock = productItem.countInStock - item.qty
+                const updatedProduct = await productItem.save()
             }
         });  
     }else{
-        orderId.orderItems.forEach(async item => {
-            const orderItem = await Product.findById(item.product)
-        
-            if(orderItem){
-                orderItem.countInStock = orderItem.countInStock + item.qty
-                await orderItem.save()
-            }else {
-                res.status(400)
-                throw new Error('Order Cancel Failed')
-            }
-        }); 
+        throw new Error('updateProductQty Failed')
     }
 })
 

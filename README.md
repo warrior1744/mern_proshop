@@ -576,19 +576,33 @@ Deploying to Heroku
 13. "heroku logs --tail" to check the status
 
 
+Improvements 1: Cancel Order function
+
+1. Backend: add cancel models in orderModel.js done
+2. add cancelOrder function in orderController.js   done
+3. orderRoutes.js, add PUT /api/orders/:id/cancel and use tokens done
+4. Frontend: create orderConstants ORDER_CANCEL_... done
+5. orderReducer.js, create orderCancelReducer reducer
+6. orderAction.js, create cancelOrder action
+7. create CancelOrderScreen.js in screens folder  done
+8. App.js, import CancelOrderScreen component and add it to route
+   '/cancel/:id'
+9. CancelOrderScreen.js, 
+   import stats from the store 
+   import cancelOrder() and emptyCart() from the actions
+   render the order status (to be removed) 
+10. auto redirect to other page if success or failed
+
+Improvements 2: Modify product quantity when its delivered
+
+11. Backend: create updateProductQty function in productController.js
+12. create POST /api/products/qtyi/:id route
+13. Frontend: create update updateProductQtyByOrder function in productActions.js
+14. OrderScreen.js, import updateProductQtyByOrder and apply in deliverHandler
 
 
-Bugs to be fixed:
 
-1. Shipping information needs to be filled in order to continue                         finished!
-2. remove other payment method when specific payment is chosen on OrderScreen Component finished!
-3. Edit Ecpay to pass order information rather than statics                             finished!
 
-4. When order is handled, quantity of product needs to be reduced.
-5. CartItems couldn't be updated when the stock items is out of stock. 
-   products need to be examined before the CartScreen. And cartItems need to be updated according to the products status.
-   (product removed or not, stocks and product details)
-6. 
 
 
 ECpay html string include script tag

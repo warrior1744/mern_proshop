@@ -3,13 +3,9 @@ import Order from '../models/orderModel.js'
 import Product from '../models/productModel.js'
 import ecpay_payment from 'ecpay_aio_nodejs'
 
-
-
-
 // @desc Create new order (placeOrderHandler in PlaceOrderScreen Component)
 // @route POST /api/orders
 // @access Private
-
 const addOrderItems = asyncHandler(async (req, res) => {
     const { 
             orderItems,
@@ -41,11 +37,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
     }
 })
 
-
 // @desc Get order by ID
 // @route GET /api/orders/:id
 // @access Private
-
 const getOrderById = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id).populate(
         {
@@ -64,7 +58,6 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @desc Update order to paid
 // @route PUT /api/orders/:id/pay
 // @access Private
-
 const updateOrderToPaid = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
 
@@ -86,10 +79,44 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     }
 })
 
+// Improvement 1
+// @desc Update order to be cancelled
+// @route PUT /api/orders/:id/cancel
+// @access Private
+const cancelOrder = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+    if(order){
+        order.isCancelled = true
+        order.cancelledDate = Date.now()
+        order.cancelledReason = req.body.reason || 'empty'
+        const cancelOrder = await order.save()
+        res.json(cancelOrder)
+    }else{
+        res.status(404)
+        throw new Error('Failed to cancel the order')
+    }
+})
+
+// for Clean purpose
+// @desc Delete all order records
+// @route DELETE /api/orders/delete
+// @access Private
+
+const deleteOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find({})
+
+    if(orders){
+        await Order.remove({}) //prefer to use deleteMany()
+        res.json({message: `The orders are removed`})
+    }else{
+        res.status(404)
+        throw new Error('Orders not found')
+    }
+})
+
 // @desc Get logged in user orders
 // @route GET /api/orders/myorders
 // @access Private
-
 const getMyOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id})////remember the authMiddleware saves token and req.user
     res.json(orders)
@@ -98,7 +125,6 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // @desc Get all orders
 // @route GET /api/orders/
 // @access Private/Admin
-
 const getOrders = asyncHandler(async (req, res) => {
     const pageSize = 10
     const page = Number(req.query.pageNumber) || 1
@@ -128,7 +154,6 @@ const getOrders = asyncHandler(async (req, res) => {
 // @desc Update order to delivered
 // @route PUT /api/orders/:id/deliver
 // @access Private
-
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
 
@@ -142,7 +167,6 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
         throw new Error('delivery failed')
     }
 })
-
 
 //**********************ECPay********************************** */
 function create_UUID(stringLen){
@@ -234,7 +258,6 @@ const getECPayment = asyncHandler(async (req, res) => {
 // @access Public
 // @desc When POST /api/orders/ecpay/:id/payment called and the returned page is submitted
 //       the ECpay server sends POST to the url as we passed the params with the ReturnURL
-
 const savePaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
 
@@ -264,5 +287,7 @@ export {
     getOrders,
     updateOrderToDelivered,
     getECPayment,
-    savePaymentResult
+    savePaymentResult,
+    cancelOrder,
+    deleteOrders
 }

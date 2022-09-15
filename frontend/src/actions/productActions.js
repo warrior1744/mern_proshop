@@ -170,7 +170,7 @@ export const listTopProducts = () => async (dispatch) => {
     }
 }
 
-export const updateProductQty = (productId, cancelOrder = {}) => async (dispatch, getState) => {
+export const updateProductQtyByOrder = (order) => async (dispatch, getState) => {
     try{
         dispatch({ type: PRODUCT_UPDATE_QTY_REQUEST})
         const { userLogin: {userInfo}, } = getState()
@@ -178,7 +178,7 @@ export const updateProductQty = (productId, cancelOrder = {}) => async (dispatch
             'Content-Type': 'application/json',
             Authorization: `Bearer ${userInfo.token}`}
         }
-        const { data } = await axios.post(`/api/products/qty/${productId}`, cancelOrder, config)
+        const { data } = await axios.post(`/api/products/qty/${order._id}`, {}, config)
 
         dispatch({ type: PRODUCT_UPDATE_QTY_SUCCESS, payload: data })
     }catch(error){
@@ -189,6 +189,5 @@ export const updateProductQty = (productId, cancelOrder = {}) => async (dispatch
         dispatch({       
             type: PRODUCT_UPDATE_QTY_FAIL,
             payload: message})
-
     }
 }

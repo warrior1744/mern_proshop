@@ -9,7 +9,7 @@ import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
-import { updateProductQty} from '../actions/productActions'
+import { updateProductQtyByOrder} from '../actions/productActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
 import { ORDER_ECPAY_RESET} from '../constants/orderConstants'
 import { Redirect } from 'react-router-dom'
@@ -59,11 +59,11 @@ export const OrderScreen = () => {
         }
 
         const addPayPalScript = async () => {
-            const { data:clientId } = await axios.get('/api/config/paypal') //get clientId from env
+            const { data:clientId } = await axios.get('/api/config/paypal')//get clientId from env
             const script = document.createElement('script')
-            script.type = 'text/javascript'
+            script.type  = 'text/javascript'
             script.async = true
-            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+            script.src   = `https://www.paypal.com/sdk/js?client-id=${clientId}`
             script.onload = () => {
                 setSdkReady(true)
             }
@@ -82,32 +82,34 @@ export const OrderScreen = () => {
                 setSdkReady(true)
             }
         }else if(order.paymentMethod === 'ecPay' && order.paymentResult.status === '交易成功'){
-            dispatch(updateProductQty(orderId, {cancelRequest: false}))
             dispatch(emptyCart())
+            console.log('ecpay is successfully handled')
         }
 
     }, [dispatch, orderId, successPay, order, successDeliver, ecpay])
-
+    
+    //when Paypal button onSuccess is called
     const successPaymentHandler = (paymentResult) => { //Paypal returned message, please check README.md
         if(paymentResult.status === 'COMPLETED'){
             dispatch(payOrder(orderId, paymentResult))
+            dispatch(emptyCart())
         }else{
             throw new Error('The payment has failed')
-        }      
+        }
     }
 
     const deliverHandler = () => {
         dispatch(deliverOrder(order))
+        dispatch(updateProductQtyByOrder(order))
     }
 
     const cancelOrderHandler = () => {
-        navigate('/cart')
+        navigate(`/cancel/${orderId}`) //orderId is params of the current component
     }
 
     const getECPayHandler = () => {
         dispatch(getECPayment(order._id))
     }
-
 
     return (
         <>
@@ -143,7 +145,6 @@ export const OrderScreen = () => {
                                     ) : (<Message variant='danger'>Not Paid</Message>)}
                                 </ListGroup.Item>
 
-
                                 <ListGroup.Item>
                                     <h2>Order Items</h2>
                                     {order.orderItems.length === 0 ? <Message>Order is Empty</Message>
@@ -152,7 +153,7 @@ export const OrderScreen = () => {
                                             {order.orderItems.map((item, index) => (
                                                 <ListGroup.Item key={index}>
                                                     <Row>
-                                                        <Col md={1}>
+                                                        <Col md={3}>
                                                             <Image src={item.image} alt={item.name} fluid rounded/> 
                                                         </Col>
                                                         <Col>

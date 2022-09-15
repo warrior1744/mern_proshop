@@ -21,6 +21,10 @@ import {
         ORDER_ECPAY_REQUEST,
         ORDER_ECPAY_FAIL,
         ORDER_ECPAY_SUCCESS,
+        ORDER_CANCEL_FAIL,
+        ORDER_CANCEL_REQUEST,
+        ORDER_CANCEL_RESET,
+        ORDER_CANCEL_SUCCESS,
          } from '../constants/orderConstants'
 
 
@@ -206,6 +210,35 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
             }
     }
 
+    export const cancelOrder = (order) => async(dispatch, getState) => {
+        try{
+            dispatch({
+                type: ORDER_CANCEL_REQUEST,
+            })
+            const { userLogin: { userInfo }} = getState()
+            const config = { //get request doesn't need to give Content-Type
+                headers: {
+                    'Content-Type':'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                },
+            }
+            const { data } = await axios.put(`/api/orders/${order.id}/cancel`, order, config )
+            dispatch({
+                type: ORDER_CANCEL_SUCCESS,
+                payload: data
+            })
+        } catch (error) {
+            const message = 
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+            dispatch({
+                type: ORDER_CANCEL_FAIL,
+                payload: message
+            })
+        }
+    }
+
     export const getECPayment = (orderId) => async(dispatch, getState) => {
         try{
             dispatch({
@@ -235,6 +268,8 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
             })
         }
     }
+
+
 
 
 

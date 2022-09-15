@@ -18,6 +18,7 @@ import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 import ECPayment from './components/ECPayment'
+import CancelOrderScreen from './screens/CancelOrderScreen'
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
               <Route path='/profile' element = {<ProfileScreen/>} />
               <Route path='/shipping' element = {<ShippingScreen/>} />    
               <Route path='/payment' element = {<PaymentScreen/>} />   
+              <Route path='/cancel/:id' element = {<CancelOrderScreen/>} />
 
               <Route path='/cart' element = {<CartScreen/>} >
                 <Route path=":id" element = {<CartScreen/>} />
