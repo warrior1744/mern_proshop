@@ -354,7 +354,7 @@ Adding PayPal Payments 2022/06/14
 4. create addPayPalScript method for scripting resource to OrderScreen Component
 5. create conditional statement for using the SDK script frontend
 6. npm install react-paypal-button-v2 --legacy-peer-deps
-7. use PayPalButton from react-paypal-button-v2, 
+7. use PayPalButton from react-paypal-button-v2, (video 12:23)
 8. create successPaymentHandler method for PayPalButton and dispatch orderId and paymentResult to payOrder in orderActions.js
 
 
