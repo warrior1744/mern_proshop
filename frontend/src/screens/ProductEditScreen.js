@@ -69,7 +69,6 @@ const ProductEditScreen = () => {
         }
 
         const { data } = await axios.post('/api/upload', formData, config)
-        console.log(`image data >>> ${JSON.stringify(data)}`)
         setImage(data)
         setUploading(false)
       }catch (error){
@@ -126,14 +125,12 @@ const ProductEditScreen = () => {
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
                     ></Form.Control>
-                    <Form.Control
-                      type='file'
-                      size='sm'
-                      // id='image-file'
+                    <Form.File
+                      id='image-file'
                       label='Choose File'
-                      custom='true'
+                      custom
                       onChange={uploadFileHandler}
-                    ></Form.Control>
+                    ></Form.File>
                     {uploading && <Loader />}
                 </Form.Group>
 
