@@ -550,7 +550,7 @@ Chapter 15
 Deploying to Heroku
 
 1. check .env in gitignore, and /build folder
-2. register to Heroku and install Heroku Cli (type "heroku --versioin" to check )
+2. register to Heroku and install Heroku Cli (type "heroku --version" to check )
 3. go to the project root folder, type "heroku login" 
 4. "heroku create [unique app name]" to create an app in your heroku account
 5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")

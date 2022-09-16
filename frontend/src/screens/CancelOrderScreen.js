@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigate, useParams} from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Card, Button, Form} from 'react-bootstrap'
 import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -15,6 +15,8 @@ function CancelOrderScreen() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const [reason, setReason] = useState('')
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -41,9 +43,10 @@ function CancelOrderScreen() {
 
   },[success, errorCancel])
 
-  const confirmCancelOrderHandler = () => {
+  const confirmCancelOrderHandler = (e) => {
+    e.preventDefault()
     if(order && orderId === order._id){
-      dispatch(cancelOrder({id:order._id, reason:'test reason'}))
+      dispatch(cancelOrder({id:order._id, reason}))
       dispatch(emptyCart())
       
       
@@ -139,20 +142,30 @@ function CancelOrderScreen() {
           </ListGroup>
         </Row>
         <Row>
-        <ListGroup>
-          <ListGroup.Item>
-
             {!success ? (
-              <Button type='button' className='btn btn-block btn-warning' onClick={confirmCancelOrderHandler}>
-                Confirm Cancel
-              </Button>
-            ):
-            (
+              <div>
+                <Form onSubmit={confirmCancelOrderHandler}>
+                  <Form.Group controlId='reason'>
+                    <Form.Label>Reason</Form.Label>
+                    <Form.Control
+                      style={{height:'180px', width:'auto'}}
+                      maxLength={50}
+                      className='mb-4'
+                      as='textarea'
+                      type='text'
+                      placeholder='enter reason here...'
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}>
+                    </Form.Control>
+                  </Form.Group>
+                  <Button type='submit' className='btn btn-block btn-warning'>
+                    Confirm Cancel
+                  </Button>
+                </Form>
+              </div>
+            ):(
               <Message variant='info'> {cancelInfo._id} has been cancelled </Message>
             )}
-
-            </ListGroup.Item>
-          </ListGroup> 
         </Row>
     </>
   )
