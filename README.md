@@ -563,8 +563,11 @@ Deploying to Heroku
 
 7. modify package.json with engine version
 
+  important: node version must meet npm version on package.json
+             
+             
   "engines": {
-    "npm": "8.15.0",
+    "npm": "8.3.1",
     "node": "^16.14.0"
   },
 

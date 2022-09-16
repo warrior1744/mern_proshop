@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { Form, Button, } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import {useDispatch, useSelector } from 'react-redux'
 import Header from '../components/Header'
 import Message from '../components/Message'
@@ -13,8 +13,6 @@ import FormContainer from '../components/FormContainer'
 
 //route '/admin/product/:id/edit'
 const ProductEditScreen = () => {
-
- 
     const params = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -33,7 +31,6 @@ const ProductEditScreen = () => {
 
     const productUpdate = useSelector((state) => state.productUpdate)
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
-
 
     useEffect(() => {
         if(successUpdate){
@@ -106,7 +103,6 @@ const ProductEditScreen = () => {
             ) : error ? (<Message variant='danger'>{error}</Message> 
             ) : (
               <Form onSubmit={submitHandler}>
-
                 <Form.Group controlId='name'>
                     <Form.Label>Product Name</Form.Label>
                     <Form.Control 
@@ -125,12 +121,12 @@ const ProductEditScreen = () => {
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
                     ></Form.Control>
-                    <Form.File
-                      id='image-file'
+                    <Form.Control
+                      type='file'
+                      size="sm"
                       label='Choose File'
-                      custom
                       onChange={uploadFileHandler}
-                    ></Form.File>
+                    ></Form.Control>
                     {uploading && <Loader />}
                 </Form.Group>
 
