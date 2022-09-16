@@ -551,6 +551,7 @@ Deploying to Heroku
 
 1. check .env in gitignore, and /build folder
 2. register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
+=======================================================================
 3. go to the project root folder, type "heroku login" 
 4. "heroku create [unique app name]" to create an app in your heroku account
 5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
@@ -564,7 +565,7 @@ Deploying to Heroku
 
   "engines": {
     "npm": "8.15.0",
-    "node": "^16.17.0"
+    "node": "^16.14.0"
   },
 
 8. modify package.json script key 
@@ -574,7 +575,7 @@ Deploying to Heroku
 11. "git push heroku master"
 12. finally add the .dev variables to heroku in the app -> settings -> Config Vars
 13. "heroku logs --tail" to check the status
-
+=====================================================================
 
 Improvements 1: Cancel Order function
 
