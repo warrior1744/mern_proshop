@@ -20,7 +20,7 @@ const logoutHandler = () => {
       <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>JimShop 1984</Navbar.Brand>
+            <Navbar.Brand>Mern Project: Electronic Store</Navbar.Brand>
           </LinkContainer>
           
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
