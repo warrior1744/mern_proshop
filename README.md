@@ -550,7 +550,7 @@ Chapter 15
 Deploying to Heroku
 
 1. check .env in gitignore, and /build folder
-2. register to Heroku and install Heroku Cli (type "heroku --version" to check )
+2. register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
 3. go to the project root folder, type "heroku login" 
 4. "heroku create [unique app name]" to create an app in your heroku account
 5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
@@ -563,8 +563,8 @@ Deploying to Heroku
 7. modify package.json with engine version
 
   "engines": {
-    "npm": "8.3.1",
-    "node": "^16.14.0"
+    "npm": "8.15.0",
+    "node": "^16.17.0"
   },
 
 8. modify package.json script key 
