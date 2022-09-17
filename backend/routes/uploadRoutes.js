@@ -1,8 +1,10 @@
 import express from 'express'
 import multer from 'multer'
 import path from 'path'
-
 const router = express.Router()
+
+
+//https://betterprogramming.pub/a-complete-guide-of-file-uploading-in-javascript-2c29c61336f5
 const storage = multer.diskStorage({
     destination(req, file, cb){
         cb(null, 'uploads/') 

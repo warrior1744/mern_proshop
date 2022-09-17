@@ -53,15 +53,20 @@ const ProductEditScreen = () => {
     },[dispatch, product, productId, successUpdate, navigate])
 
     const uploadFileHandler = async (e) => {
-      const file = e.target.files[0]
+      const file = e.target.files[0] //read the files property
       const formData = new FormData()
-      formData.append('image', file)
-      setUploading(true)
+      formData.append('image', file) //package the file into FormData format
+      setUploading(true) // using Axios to upload the file
 
       try{
         const config = {
           headers:{
             'Content-Type': 'multipart/form-data',
+          },
+          onUploadProgress: progressEvent => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total)
+              console.log(`upload process: ${percentCompleted}`)
           }
         }
 

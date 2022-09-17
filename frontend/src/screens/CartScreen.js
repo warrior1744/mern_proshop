@@ -10,9 +10,7 @@ import Meta from '../components/Meta'
 
 //route /cart ; /cart/:id
 const CartScreen = () => {
-  const productId = useParams().id //:params possible output-> 629751359154dc4ea66c7638
-  const queryQty = useLocation().search  //?query  possible output-> ?qty=1
-  const qty = queryQty? Number(queryQty.split('=')[1]) : 1 //possible output-> 1
+  
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -20,10 +18,8 @@ const CartScreen = () => {
   const { cartItems } = cart
   
   useEffect(() => {
-    if(productId){
-      dispatch(addToCart(productId, qty))
-    }
-  }, [dispatch, productId, qty])
+
+  }, [])
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id))

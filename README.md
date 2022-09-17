@@ -604,6 +604,18 @@ Improvements 2: Modify product quantity when its delivered
 13. Frontend: create update updateProductQtyByOrder function in productActions.js
 14. OrderScreen.js, import updateProductQtyByOrder and apply in deliverHandler
 
+Improvements 3: ProductScreen.js AddToCart issue
+15. use dispatch addToCart instead of passing params to CartScreen component
+16. Dont navigate to CartScreen when user added any product to the cart
+17. add a span on the Cart icon in Header component and 
+    show the quantity of the cart items 
+    (Header component needs cart stats)
+    (index.css added the cart indicator badge style)
+
+
+
+Bug 1: file uploading issue
+
 
 
 

@@ -9,7 +9,10 @@ const Header = () => {
 
 const dispatch = useDispatch()
 const userLogin = useSelector(state => state.userLogin)
+const cart = useSelector(state => state.cart)
+const { cartItems } = cart
 const { userInfo } = userLogin
+
 
 const logoutHandler = () => {
   dispatch(logout())
@@ -30,6 +33,9 @@ const logoutHandler = () => {
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i> Cart
+                  {cartItems.length > 0 && 
+                    <span className='badge badge-warning' id='lblCartCount'>{cartItems.length}</span>
+                  }
                 </Nav.Link>
               </LinkContainer>
 
