@@ -614,8 +614,25 @@ Improvements 3: ProductScreen.js AddToCart issue
 
 
 
-Bug 1: file uploading issue
+Bug 1: file uploading to heroku issue
+context: 
+The issue with the photo uploading to Heroku is only bad because when they run dynos on your server their "cycle" cleans the uploaded files. The solution I am proposing will allow you to upload your photos to Cloudinary and then use that url for your photos return path.
 
+You actually don't have to change anything in your files, you actually want to follow the tutorial until you are successfully uploading images.
+
+Once you can upload imagees you will want to open a developer Cloudinary account (free) Cloudinay Dev account register.
+
+1. In your env file you want to add these properties
+CLOUD_NAME = use-your-bucket-name-here-when-creating-bucket
+CLOUD_API_KEY = api-key-from-cloudinary
+CLOUD_API_SECRET = api-secret-from-cloudinary
+
+2. npm i cloudinary
+3. server.js, import pkg from 'cloudinary'
+   config cloudinary with name, api_key and api_secret
+4. uploadRoute.js, import asyncHandler
+   import cloudinary as server.js
+   in the router.post, use cloud.uploader.upload to upload the req.file.path to Cloudinary and res.send the url
 
 
 
