@@ -39,11 +39,11 @@ const upload = multer({
 })
 
 router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
-
+    console.log(`heroku upload begins`)
     const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
     console.log(`uploadPhoto >>> /${uploadPhoto}`)
     console.log(`uploadPhoto.url >>> ${uploadPhoto.url}`)
-    
+
     res.send(uploadPhoto.url)
   }))
 

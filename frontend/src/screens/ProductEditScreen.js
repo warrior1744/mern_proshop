@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { updateProduct, listProductDetails } from '../actions/productActions'
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { PRODUCT_UPDATE_RESET, PRODUCT_DETAILS_RESET } from '../constants/productConstants'
 import FormContainer from '../components/FormContainer'
 
 
@@ -35,6 +35,7 @@ const ProductEditScreen = () => {
     useEffect(() => {
         if(successUpdate){
             dispatch({ type: PRODUCT_UPDATE_RESET })
+            dispatch({ type: PRODUCT_DETAILS_RESET})
             navigate('/admin/productlist')
         }else{
             // dispatch({ type: PRODUCT_UPDATE_RESET }) //clean the update message whenever user click to edit the product
@@ -63,11 +64,11 @@ const ProductEditScreen = () => {
           headers:{
             'Content-Type': 'multipart/form-data',
           },
-          onUploadProgress: progressEvent => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total)
-              console.log(`upload process: ${percentCompleted}`)
-          }
+          // onUploadProgress: progressEvent => {
+          //   const percentCompleted = Math.round(
+          //     (progressEvent.loaded * 100) / progressEvent.total)
+          //     console.log(`upload process: ${percentCompleted}`)
+          // }
         }
 
         const { data } = await axios.post('/api/upload', formData, config)
@@ -128,7 +129,6 @@ const ProductEditScreen = () => {
                     ></Form.Control>
                     <Form.Control
                       type='file'
-                      size="sm"
                       label='Choose File'
                       onChange={uploadFileHandler}
                     ></Form.Control>

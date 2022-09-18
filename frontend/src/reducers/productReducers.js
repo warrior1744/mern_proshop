@@ -5,6 +5,7 @@ import { PRODUCT_LIST_SUCCESS,
          PRODUCT_DETAILS_SUCCESS, 
          PRODUCT_DETAILS_REQUEST, 
          PRODUCT_DETAILS_FAIL,
+         PRODUCT_DETAILS_RESET,
          PRODUCT_DELETE_FAIL,
          PRODUCT_DELETE_REQUEST,
          PRODUCT_DELETE_SUCCESS,
@@ -57,6 +58,8 @@ export const productDetailsReducer = (state = { product: { reviews: []}}, action
             return { loading: false, product: action.payload }
         case PRODUCT_DETAILS_FAIL:
             return { loading: false, error: action.payload }
+        case PRODUCT_DETAILS_RESET:
+            return { product: {reviews: []}}
         default:
             return state
     }

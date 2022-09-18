@@ -36,20 +36,21 @@ if (process.env.NODE_ENV === 'development'){
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
 })
 
 app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
 app.use(express.urlencoded({extended: false}))
 
-app.use('/api', cors())//chapter15
+// app.use('/api', cors())//chapter15
 
 const __dirname = path.resolve() // D:\Dropbox\Dev\WebDev\MERN_E-commerce\proshop
 
 app.engine('handlebars', engine({  //configure Handlebars view engine by specifing the default layout 'main'
     defaultLayout: "main"
   }));//you can change the extension to .hbs by giving a new instance {extname: '.hbs'}
-app.set('view cache', true)
+// app.set('view cache', true)
 app.set('views', path.join(__dirname, 'backend/views'));
 app.set('view engine', 'handlebars')
 
