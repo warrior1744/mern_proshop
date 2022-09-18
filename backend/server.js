@@ -13,8 +13,10 @@ import colors from 'colors'
 import {engine} from 'express-handlebars'
 import cors from 'cors'
 
-import pkg from 'cloudinary'
-const cloudinary = pkg
+// import pkg from 'cloudinary'
+// const cloudinary = pkg
+
+import { v2 as cloudinary } from 'cloudinary'
 
 // import products from './data/products.js'
 import productRoutes from './routes/productRoutes.js'

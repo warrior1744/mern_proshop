@@ -2,9 +2,9 @@ import express from 'express'
 import multer from 'multer'
 import path from 'path'
 import asyncHandler from 'express-async-handler'
-import pkg from 'cloudinary'
-const cloudinary = pkg
-
+// import pkg from 'cloudinary'
+// const cloudinary = pkg
+import { v2 as cloudinary } from 'cloudinary'
 
 const router = express.Router()
 
