@@ -205,11 +205,11 @@ const getECPayment = asyncHandler(async (req, res) => {
             TotalAmount: total,   //
             TradeDesc: order.paymentMethod,
             ItemName: resultOrder,
-            ReturnURL: `https://jimshop1984.herokuapp.com/api/orders/ecpay/${order._id}/savePaymentResult`,
+            ReturnURL: `https://ecommerce-proshop-jim.herokuapp.com/api/orders/ecpay/${order._id}/savePaymentResult`,
             // ChooseSubPayment: '',
             // OrderResultURL: 'https://meadowlark1984.herokuapp.com/REST/ecpay/orderResult',
             // NeedExtraPaidInfo: 'Y',
-            ClientBackURL: `https://jimshop1984.herokuapp.com/order/${order._id}`,
+            ClientBackURL: `https://ecommerce-proshop-jim.herokuapp.com/order/${order._id}`,
             // ItemURL: 'https://meadowlark1984.herokuapp.com',
             Remark: 'This is Remark',
             // HoldTradeAMT: '1',
