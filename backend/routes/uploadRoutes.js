@@ -41,11 +41,12 @@ const upload = multer({
 router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
 
     try{ 
-        console.log(`heroku upload begins`)
         const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
         console.log(`uploadPhoto >>> /${uploadPhoto}`)
         console.log(`uploadPhoto.url >>> ${uploadPhoto.url}`)
-        res.send(uploadPhoto.url)
+        setTimeout(() => {
+            res.send(uploadPhoto.url)
+        }, '3000')
     }catch(err){
         console.log('Error occured in uploading files', err)
         return res.sendStatus(500)
