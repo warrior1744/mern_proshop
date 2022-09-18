@@ -12,6 +12,10 @@ import colors from 'colors'
 
 import {engine} from 'express-handlebars'
 import cors from 'cors'
+
+import pkg from 'cloudinary'
+const cloudinary = pkg
+
 // import products from './data/products.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
@@ -19,22 +23,21 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import { notFound, errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
-import pkg from 'cloudinary'
+
 
 dotenv.config()
 connectDB()
 const app = express()
-const cloudinary = pkg
+
+if (process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'))
+}
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
-
-
-if (process.env.NODE_ENV === 'development'){
-    app.use(morgan('dev'))
-}
 
 app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
 app.use(express.urlencoded({extended: false}))
@@ -66,7 +69,6 @@ if(process.env.NODE_ENV === 'production') {
     res.send('API is running...')
 })
 }
-
 
 //throw an error if the request is not found
 app.use(notFound)
