@@ -634,7 +634,9 @@ CLOUD_API_SECRET = api-secret-from-cloudinary
    import cloudinary as server.js
    in the router.post, use cloud.uploader.upload to upload the req.file.path to Cloudinary and res.send the url
 
+Bug2: ProductListScreen refresh not consistent
 
+1. 
 
 
 
