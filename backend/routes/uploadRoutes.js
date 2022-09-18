@@ -38,19 +38,27 @@ const upload = multer({
     }
 })
 
-router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
-
-    try{ 
-        const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
-        console.log(`uploadPhoto >>> /${uploadPhoto}`)
-        console.log(`uploadPhoto.url >>> ${uploadPhoto.url}`)
-        setTimeout(() => {
+router.post('/', upload.single('image'), (req, res, next) => {
+  
+       cloudinary.uploader.upload(`${req.file.path}`).then(
+         uploadPhoto => {
             res.send(uploadPhoto.url)
-        }, '3000')
-    }catch(err){
-        console.log('Error occured in uploading files', err)
-        return res.sendStatus(500)
-    }
-}))
+         }).catch(next)
+})
+
+// router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
+
+//     try{ 
+//         const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
+//         console.log(`uploadPhoto >>> /${uploadPhoto}`)
+//         console.log(`uploadPhoto.url >>> ${uploadPhoto.url}`)
+//         setTimeout(() => {
+//             res.send(uploadPhoto.url)
+//         }, '3000')
+//     }catch(err){
+//         console.log('Error occured in uploading files', err)
+//         return res.sendStatus(500)
+//     }
+// }))
 
 export default router
