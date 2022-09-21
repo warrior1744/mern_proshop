@@ -1,8 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
-import Product from '../models/productModel.js'
 import ecpay_payment from 'ecpay_aio_nodejs'
-
+import {v4 as uuidv4} from 'uuid'
 // @desc Create new order (placeOrderHandler in PlaceOrderScreen Component)
 // @route POST /api/orders
 // @access Private
@@ -179,7 +178,7 @@ const onTimeValue = function () {
     var date = new Date();var mm = date.getMonth() + 1;var dd = date.getDate();var hh = date.getHours();var mi = date.getMinutes();var ss = date.getSeconds();
     return [date.getFullYear(), "/" + (mm > 9 ? '' : '0') + mm, "/" + (dd > 9 ? '' : '0') + dd, " " + (hh > 9 ? '' : '0') + hh, ":" + (mi > 9 ? '' : '0') + mi, ":" + (ss > 9 ? '' : '0') + ss].join('');};
 
-// @desc Update order to delivered
+// @desc Process ECpay
 // @route POST /api/orders/ecpay/:id/payment
 // @access Private
 // @desc when done successfuly ,will create html string and scrip tag data and return to the frontend
@@ -205,7 +204,7 @@ const getECPayment = asyncHandler(async (req, res) => {
             TotalAmount: total,   //
             TradeDesc: order.paymentMethod,
             ItemName: resultOrder,
-            ReturnURL: `https://ecommerce-proshop-jim.herokuapp.com/api/orders/ecpay/${order._id}/savePaymentResult`,
+            ReturnURL: `https://ecommerce-proshop-jim.herokuapp.com/api/orders/ecpay/${order._id}/saveECPaymentResult`,
             // ChooseSubPayment: '',
             // OrderResultURL: 'https://meadowlark1984.herokuapp.com/REST/ecpay/orderResult',
             // NeedExtraPaidInfo: 'Y',
@@ -254,11 +253,11 @@ const getECPayment = asyncHandler(async (req, res) => {
 })
 
 // @desc Save order information to the database
-// @route POST /api/orders/ecpay/:id/savePaymentResult
+// @route POST /api/orders/ecpay/:id/saveECPaymentResult
 // @access Public
 // @desc When POST /api/orders/ecpay/:id/payment called and the returned page is submitted
 //       the ECpay server sends POST to the url as we passed the params with the ReturnURL
-const savePaymentResult = asyncHandler(async (req, res) => {
+const saveECPaymentResult = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
 
     if(order && req.body.RtnMsg === '交易成功'){
@@ -287,7 +286,8 @@ export {
     getOrders,
     updateOrderToDelivered,
     getECPayment,
-    savePaymentResult,
+    saveECPaymentResult,
     cancelOrder,
-    deleteOrders
+    deleteOrders,
+
 }

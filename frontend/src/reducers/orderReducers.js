@@ -20,14 +20,22 @@ import { ORDER_CREATE_REQUEST,
          ORDER_DELIVER_FAIL,
          ORDER_CREATE_RESET,
          ORDER_DETAILS_RESET,
-         ORDER_ECPAY_FAIL,
-         ORDER_ECPAY_REQUEST,
-         ORDER_ECPAY_RESET,
-         ORDER_ECPAY_SUCCESS,
          ORDER_CANCEL_FAIL,
          ORDER_CANCEL_REQUEST,
          ORDER_CANCEL_RESET,
          ORDER_CANCEL_SUCCESS,
+         ORDER_ECPAY_FAIL,
+         ORDER_ECPAY_REQUEST,
+         ORDER_ECPAY_RESET,
+         ORDER_ECPAY_SUCCESS,
+         ORDER_LINEPAY_REQUEST_FAIL,
+         ORDER_LINEPAY_REQUEST_REQUEST,
+         ORDER_LINEPAY_REQUEST_RESET,
+         ORDER_LINEPAY_REQUEST_SUCCESS,
+         ORDER_LINEPAY_CONFIRM_FAIL,
+         ORDER_LINEPAY_CONFIRM_REQUEST,
+         ORDER_LINEPAY_CONFIRM_RESET,
+         ORDER_LINEPAY_CONFIRM_SUCCESS,
     } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -210,6 +218,54 @@ export const getECPaymentReducer = (state = {}, action) => {
                 error: action.payload
             }
         case ORDER_ECPAY_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const getLineRequestReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ORDER_LINEPAY_REQUEST_REQUEST:
+            return {
+                loading: true
+            }
+        case ORDER_LINEPAY_REQUEST_SUCCESS:
+            return {
+                loading: false,
+                linepay: action.payload,
+                success: true
+            }
+        case ORDER_LINEPAY_REQUEST_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case ORDER_LINEPAY_REQUEST_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const getLineConfirmReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ORDER_LINEPAY_CONFIRM_REQUEST:
+            return {
+                loading: true
+            }
+        case ORDER_LINEPAY_CONFIRM_SUCCESS:
+            return {
+                loading: false,
+                linepay: action.payload,
+                success: true
+            }
+        case ORDER_LINEPAY_CONFIRM_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case ORDER_LINEPAY_CONFIRM_RESET:
             return {}
         default:
             return state

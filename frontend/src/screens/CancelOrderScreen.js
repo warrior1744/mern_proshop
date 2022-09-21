@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {cancelOrder} from '../actions/orderActions'
 import { emptyCart } from '../actions/cartActions'
+import { ORDER_CANCEL_RESET } from '../constants/orderConstants'
 
 function CancelOrderScreen() {
 
@@ -32,12 +33,14 @@ function CancelOrderScreen() {
     if(success){
       setTimeout(() => {
         navigate('/cart')
+        dispatch({type: ORDER_CANCEL_RESET})
       }, "3000")
     }
 
     if(errorCancel){
       setTimeout(() => {
         navigate('/cart')
+        dispatch({type: ORDER_CANCEL_RESET})
       }, "3000")
     }
 
@@ -47,6 +50,8 @@ function CancelOrderScreen() {
     e.preventDefault()
     if(order && orderId === order._id){
       dispatch(cancelOrder({id:order._id, reason}))
+
+      //also clear order details
       dispatch(emptyCart())
       
       

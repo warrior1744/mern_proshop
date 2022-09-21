@@ -59,6 +59,15 @@ const submitHandler = (e) => {
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
 
+            <Form.Check 
+              type='radio'
+              label='LINEpay'
+              id='linePay'
+              name='paymentMethod'
+              value='linePay'
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+
           </Col>
           </Form.Group>
           <Button type='submit' variant='primary'>

@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getOrderDetails, payOrder, deliverOrder, getECPayment} from '../actions/orderActions'
+import { getOrderDetails, payOrder, deliverOrder, getECPayment, getLineRequest} from '../actions/orderActions'
 import { updateProductQtyByOrder} from '../actions/productActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
-import { ORDER_ECPAY_RESET} from '../constants/orderConstants'
+import { ORDER_ECPAY_RESET, ORDER_LINEPAY_RESET} from '../constants/orderConstants'
 import { Redirect } from 'react-router-dom'
 import { emptyCart } from '../actions/cartActions'
 
@@ -20,7 +20,7 @@ import { emptyCart } from '../actions/cartActions'
 export const OrderScreen = () => {
 
     const params = useParams()
-    const orderId = params.id //check the pass order Id
+    const orderId = params.id //check the passed order Id from createOrder
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -37,16 +37,16 @@ export const OrderScreen = () => {
     const orderDeliver = useSelector((state) => state.orderDeliver)
     const { loading: loadingDeliver, success: successDeliver} = orderDeliver
 
-    const ecpayScreen = useSelector((state) => state.orderECPayment)
-    const { loading: ecpayLoading, ecpay} = ecpayScreen
+    const orderECPayment = useSelector((state) => state.orderECPayment)
+    const { loading: ecpayLoading, ecpay} = orderECPayment
+
+    const orderLineRequest = useSelector((state) => state.orderLineRequest)
+    const { loading: linePayLoading, success: lineSuccess, linepay} = orderLineRequest
 
     const [sdkReady, setSdkReady] = useState(false)
 
     if(!loading){
-        const addDecimals = (num) => {
-            return (Math.round(num * 100)/ 100).toFixed(2)
-        }
-        order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+        order.itemsPrice = order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     }
 
     useEffect(() => {
@@ -54,6 +54,9 @@ export const OrderScreen = () => {
             navigate('/login')
         }
 
+        //when getECPayment is dispatched and save to the store,
+        //the api (backend) returns a html page, 
+        //we navigate to /ecpay and get the state to display the html content
         if(ecpay){
             navigate('/ecpay')
         }
@@ -71,7 +74,6 @@ export const OrderScreen = () => {
         }
 
         if(!order || successPay || order._id !== orderId || successDeliver){ //we also need to check if the details is passed by ProfileScreen that might be different
-            // dispatch(emptyCart())
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch(getOrderDetails(orderId))
@@ -84,9 +86,16 @@ export const OrderScreen = () => {
         }else if(order.paymentMethod === 'ecPay' && order.paymentResult.status === '交易成功'){
             dispatch(emptyCart())
             console.log('ecpay is successfully handled')
+        }else if(order.paymentMethod === 'linePay' && !order.isPaid && lineSuccess){ 
+
+            if(linepay.returnMessage === 'Success.'){
+                console.log('linepay is success')
+                // window.location.replace(linepay.info.paymentUrl.web)
+            }
+            // dispatch({ type: ORDER_LINEPAY_REQUEST_RESET})  
         }
 
-    }, [dispatch, orderId, successPay, order, successDeliver, ecpay])
+    }, [dispatch, orderId, successPay, order, successDeliver, ecpay, linepay])
     
     //when Paypal button onSuccess is called
     const successPaymentHandler = (paymentResult) => { //Paypal returned message, please check README.md
@@ -109,6 +118,10 @@ export const OrderScreen = () => {
 
     const getECPayHandler = () => {
         dispatch(getECPayment(order._id))
+    }
+
+    const getLinePayHandler = () => {
+        dispatch(getLineRequest(order._id))
     }
 
     return (
@@ -217,15 +230,26 @@ export const OrderScreen = () => {
                                             </ListGroup.Item>
 
                                             <ListGroup>
-                                                {order.paymentMethod==='ecPay' &&(
+                                                {order.paymentMethod=== 'ecPay' ? (
+                                                    <ListGroup.Item>
+                                                        <Row>
+                                                            <Col md={7}>
+                                                                <Image src='/images/ecpay.png' alt='ecpay' onClick={getECPayHandler}  fluid />
+                                                            </Col>
+                                                        </Row>
+                                                    </ListGroup.Item>
+                                                ) : order.paymentMethod === 'linePay' ?(
                                                     <ListGroup.Item>
                                                     <Row>
                                                         <Col md={7}>
-                                                            <Image src='/images/ecpay.png' alt='ecpay' onClick={getECPayHandler}  fluid />
+                                                            <Image src='/images/linePay.png' alt='linepay' onClick={getLinePayHandler}  fluid />
                                                         </Col>
                                                     </Row>
-                                                    </ListGroup.Item>
-                                                )}                                               
+                                                </ListGroup.Item>
+                                                ) : {
+
+
+                                                }}                                               
                                             </ListGroup>
                                         </>
                                     )}

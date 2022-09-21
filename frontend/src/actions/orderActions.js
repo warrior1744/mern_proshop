@@ -18,14 +18,24 @@ import {
         ORDER_DELIVER_REQUEST,
         ORDER_DELIVER_SUCCESS,
         ORDER_DELIVER_FAIL,
-        ORDER_ECPAY_REQUEST,
-        ORDER_ECPAY_FAIL,
-        ORDER_ECPAY_SUCCESS,
         ORDER_CANCEL_FAIL,
         ORDER_CANCEL_REQUEST,
         ORDER_CANCEL_RESET,
         ORDER_CANCEL_SUCCESS,
-         } from '../constants/orderConstants'
+        ORDER_ECPAY_REQUEST,
+        ORDER_ECPAY_FAIL,
+        ORDER_ECPAY_SUCCESS,
+        ORDER_LINEPAY_REQUEST_FAIL,
+        ORDER_LINEPAY_REQUEST_REQUEST,
+        ORDER_LINEPAY_REQUEST_RESET,
+        ORDER_LINEPAY_REQUEST_SUCCESS,
+        ORDER_LINEPAY_CONFIRM_FAIL,
+        ORDER_LINEPAY_CONFIRM_REQUEST,
+        ORDER_LINEPAY_CONFIRM_RESET,
+        ORDER_LINEPAY_CONFIRM_SUCCESS,
+       } from '../constants/orderConstants'
+
+
 
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -261,6 +271,35 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
         }catch (error){
             dispatch({
                 type: ORDER_ECPAY_FAIL,
+                payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+            })
+        }
+    }
+
+    export const getLineRequest = (orderId) => async(dispatch, getState) => {
+        try{
+            dispatch({
+                type: ORDER_LINEPAY_REQUEST_REQUEST,
+            })
+            const { userLogin: { userInfo }} = getState()
+            const config = {
+                headers: {                
+                    'Content-Type' : 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                },
+                timeout:10000,
+            }
+            const {data} = await axios.post(`/api/orders/linepay/${orderId}/payment`, {}, config)
+            dispatch({
+                type: ORDER_LINEPAY_REQUEST_SUCCESS,
+                payload: data,
+            })
+        }catch (error){
+            dispatch({
+                type: ORDER_LINEPAY_REQUEST_FAIL,
                 payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

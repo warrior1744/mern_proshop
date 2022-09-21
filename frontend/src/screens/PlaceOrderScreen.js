@@ -12,14 +12,14 @@ import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 //route '/placeorder'
 export const PlaceOrderScreen = () => {
 
-    const addDecimals = (num) => {
-        return (Math.round(num * 100)/ 100).toFixed(2)
-    }
+    // const addDecimals = (num) => {
+    //     return (Math.round(num * 100)/ 100).toFixed(2)
+    // }
     const cart = useSelector(state => state.cart)    
-    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
-    cart.shippingPrice = addDecimals(cart.itemsPrice > 1000 ? 0 : 100)
-    cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
-    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
+    cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.shippingPrice = cart.itemsPrice > 1000 ? 0 : 100
+    cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(0))
+    cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice))
 
     const orderCreate = useSelector(state => state.orderCreate)
     const { order, success, error } = orderCreate

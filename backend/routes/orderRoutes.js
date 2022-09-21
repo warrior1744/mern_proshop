@@ -6,13 +6,22 @@ import { addOrderItems,
          getMyOrders,
          getOrders,
          updateOrderToDelivered,
-         getECPayment,
-         savePaymentResult,
          cancelOrder,
          deleteOrders,
+         getECPayment,
+         saveECPaymentResult,
        } from '../controllers/orderController.js'
-import {protect, admin} from '../middleware/authMiddleware.js'
+import {
+         getLineRequest,
+         saveLinePaymentResult,
+       } from '../controllers/linepayController.js'
+import {
+         protect,
+         admin
+       } from '../middleware/authMiddleware.js'
 
+
+       
 //      '/api/orders'
 router.route('/').post(protect, addOrderItems).get(protect, admin, getOrders)
 
@@ -23,8 +32,10 @@ router.route('/:id/pay').put(protect, updateOrderToPaid) //update the order obje
 router.route('/:id/deliver').put(protect, admin, updateOrderToDelivered)
 router.route('/:id/cancel').put(protect, cancelOrder)
 router.route('/ecpay/:id/payment').post(protect, getECPayment)
-router.route('/ecpay/:id/savePaymentResult').post(savePaymentResult) //conducted by ECPay
+router.route('/ecpay/:id/saveECPaymentResult').post(saveECPaymentResult) //conducted by ECPay
 
+router.route('/linepay/:id/payment').post(protect, getLineRequest)
+router.route('/linepay/:id/saveLinePaymentResult').post(saveLinePaymentResult)
 
 
 export default router
