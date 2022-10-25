@@ -1,16 +1,9 @@
-
 import Order from '../models/orderModel.js'
 import crypto from 'crypto-js'
 import axios from 'axios'
 import asyncHandler from 'express-async-handler'
 import {v4 as uuidv4} from 'uuid'
 
-
-
-const lineAxios = axios.create({
-            baseURL: process.env.LINE_URI_SANDBOX,
-            // headers: {Authorization: `token ${GITHUB_TOKEN}` }
-})
 // encryption medthod
 
 function __encrypt (method, api, body, nonce){
@@ -65,7 +58,7 @@ const getLineRequest = asyncHandler(async (req, res) => {
       body = {
         amount: order.totalPrice - (order.shippingPrice + order.taxPrice),
         currency: 'TWD',
-        orderId: 'linepay' + order._id,
+        orderId: order._id,
         packages: [
           {
             id: order._id,
@@ -75,10 +68,13 @@ const getLineRequest = asyncHandler(async (req, res) => {
           }
         ],
         redirectUrls:{
-          confirmUrl: 'https://www.google.com.tw',
+          confirmUrl: 'http://localhost:3000/line/confirm',
           cancelUrl: 'https://www.twitter.com.tw'
         },
         options:{
+          payment: {
+            payType: 'NORMAL'
+          },
           shipping:{
             feeAmount:order.shippingPrice + order.taxPrice,
           }
@@ -93,33 +89,50 @@ const getLineRequest = asyncHandler(async (req, res) => {
     res.json(data) 
 })
 
-
-
-const getLineShippingFeeInquiry = asyncHandler(async (req, res) => {
-  res.json({message:'shipping msg'})
-})
-
+//@desc Process linePay Confirm
+//@rout /api/orders/linepay/confirm
+//@access Private
 const getLineConfirm = asyncHandler(async (req, res) => {
-  res.json({message: 'confirm msg'})
+  const order = await Order.findById(req.query.orderId)
+  const transactionId = req.query.transactionId
+  const amount = order.totalPrice - (order.shippingPrice + order.taxPrice)
+  let body = {}
+  if(order){
+    body = {
+      amount, currency: 'TWD'
+    }
+  }
+  const uri = process.env.LINE_URI_SANDBOX
+  const api = `/v3/payments/${transactionId}/confirm`
+  const lineHeader = __header('POST', api, body)
+  const config = { headers: lineHeader }
+  const {data} = await axios.post(uri+api, body, config)
+  res.json(data)
 })
 
-
-
-
-
-
-
-//@desc Process linePay
-//@rout /api/orders/linepay/:id/saveLinePaymentresult
-//@access Public
-const saveLinePaymentResult = asyncHandler(async (req, res) => {
-
-    console.log('saveLinePaymentResult')
+//@desc Save linePay Confirm
+//@rout /api/orders/linepay/:id/save
+//@access Private
+const saveLineConfirm = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.orderId)
+  if(order && req.body.returnMessage === 'Success.'){
+    order.isPaid = true
+    order.paidAt = Date.now()
+    order.paymentResult = {
+        id: req.body.transactionId, //bugs no data can be read
+        status: req.body.returnMessage,
+        update_time: '',
+        email_address: ''
+    }
+    await order.save()
+  }else {
+      res.status(400)
+      throw new Error('Linepay failed')
+  }
 })
-
-
 
 export {
     getLineRequest,
-    saveLinePaymentResult,
+    getLineConfirm,
+
 }

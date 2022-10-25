@@ -17,7 +17,6 @@ const LoginScreen = () => {
     
     const navigate = useNavigate()
     const queryRedirect = useLocation().search //possbile output: ?redirect=shipping  or  
-    
     const redirect = queryRedirect ? queryRedirect.split('=')[1] : '' //possible output: shipping or
     
     const dispatch = useDispatch()

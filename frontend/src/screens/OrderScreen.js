@@ -1,18 +1,15 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { Link, useParams} from 'react-router-dom'
+import { Link, useParams, useNavigate} from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Card, Button} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder, getECPayment, getLineRequest} from '../actions/orderActions'
 import { updateProductQtyByOrder} from '../actions/productActions'
-import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET } from '../constants/orderConstants'
-import { ORDER_ECPAY_RESET, ORDER_LINEPAY_RESET} from '../constants/orderConstants'
-import { Redirect } from 'react-router-dom'
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
 import { emptyCart } from '../actions/cartActions'
 
 
@@ -49,15 +46,14 @@ export const OrderScreen = () => {
         order.itemsPrice = order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     }
 
+    dispatch(emptyCart())
+
     useEffect(() => {
         if(!userInfo){
             navigate('/login')
         }
 
-        //when getECPayment is dispatched and save to the store,
-        //the api (backend) returns a html page, 
-        //we navigate to /ecpay and get the state to display the html content
-        if(ecpay){
+        if(ecpay){ //when a html page is returned, navigate to the content
             navigate('/ecpay')
         }
 
@@ -84,15 +80,15 @@ export const OrderScreen = () => {
                 setSdkReady(true)
             }
         }else if(order.paymentMethod === 'ecPay' && order.paymentResult.status === '交易成功'){
-            dispatch(emptyCart())
             console.log('ecpay is successfully handled')
         }else if(order.paymentMethod === 'linePay' && !order.isPaid && lineSuccess){ 
 
             if(linepay.returnMessage === 'Success.'){
-                console.log('linepay is success')
-                // window.location.replace(linepay.info.paymentUrl.web)
+                window.open(linepay.info.paymentUrl.web, "_blank")
+                // dispatch({ type: ORDER_LINEPAY_REQUEST_RESET})
             }
-            // dispatch({ type: ORDER_LINEPAY_REQUEST_RESET})  
+            //confirmUrl -> https://example.com/?transactionId=2022092100727542210&orderId=linepay632ab4989445ccf0bd4f4b6a
+              
         }
 
     }, [dispatch, orderId, successPay, order, successDeliver, ecpay, linepay])
@@ -101,7 +97,6 @@ export const OrderScreen = () => {
     const successPaymentHandler = (paymentResult) => { //Paypal returned message, please check README.md
         if(paymentResult.status === 'COMPLETED'){
             dispatch(payOrder(orderId, paymentResult))
-            dispatch(emptyCart())
         }else{
             throw new Error('The payment has failed')
         }
@@ -265,14 +260,15 @@ export const OrderScreen = () => {
                             </Card>
 
 
-
+                            {!order.isCancelled &&
                             <ListGroup>
                                 <ListGroup.Item>
                                     <Button type='button' className='btn btn-block' onClick={cancelOrderHandler}>
                                             Cancel Order
                                     </Button>
                                 </ListGroup.Item>
-                            </ListGroup>                                  
+                            </ListGroup> 
+                            }                                 
                         </Col>
                     </Row>         
                 </>

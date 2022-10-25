@@ -1,7 +1,5 @@
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
 import CartScreen from './screens/CartScreen'
@@ -19,6 +17,8 @@ import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
 import ECPayment from './components/ECPayment'
 import CancelOrderScreen from './screens/CancelOrderScreen'
+import LinepayConfirmScreen from './screens/LinepayConfirmScreen'
+import NotFound from './screens/NotFound'
 
 const App = () => {
   return (
@@ -59,7 +59,9 @@ const App = () => {
               <Route path='/admin/orderList/search/:keyword/page/:pageNumber' exact element = {<OrderListScreen/>} />
               <Route path='/admin/orderList/search/:keyword' exact element = {<OrderListScreen/>} />
               <Route path='/ecpay' exact element = {<ECPayment/>} />
-              
+              <Route path='/line/confirm' exact element = {<LinepayConfirmScreen/>} />
+              <Route path='/*' element={<NotFound/>} />
+
             </Routes>
           </Container>
         </main>

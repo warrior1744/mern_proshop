@@ -32,7 +32,7 @@ const importData = async () => {
 
     }catch (error){
         console.error(`Error: ${error}`.red.inverse)
-        process.exit()
+        process.exit(1)
     }
 }
 
@@ -46,7 +46,7 @@ const destroyData = async () => {
         process.exit()
     }catch (error){
         console.error(`Error: ${error}`.red.inverse)
-        process.exit()
+        process.exit(1)
     }
 }
 

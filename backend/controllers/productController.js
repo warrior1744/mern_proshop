@@ -128,8 +128,6 @@ const updateProduct = asyncHandler(async (req, res) => {
     }
 })
 
-
-
 // @desc create new review
 // @route POST /api/products/:id/reviews
 // @access public
@@ -169,7 +167,6 @@ const getTopProducts = asyncHandler(async (req, res) => {
     res.json(products)
 })
 
-
 // Improvement 2
 // @desc Update product qty
 // @route POST /api/products/qty/:id
@@ -190,10 +187,6 @@ const updateProductQty = asyncHandler(async (req, res)=> {
         throw new Error('updateProductQty Failed')
     }
 })
-
-
-
-
 
 export {
     getProductById, getProducts, deleteProductById, updateProduct, createProduct, createProductReivew, getTopProducts, updateProductQty

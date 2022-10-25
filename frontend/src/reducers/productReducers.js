@@ -30,8 +30,6 @@ import { PRODUCT_LIST_SUCCESS,
          PRODUCT_UPDATE_QTY_SUCCESS }
          from '../constants/productConstants.js'
 
-
-
 export const productListReducer = (state = { products: []}, action) => {
     switch(action.type) {
         case PRODUCT_LIST_REQUEST:

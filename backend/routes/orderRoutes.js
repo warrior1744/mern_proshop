@@ -13,7 +13,7 @@ import { addOrderItems,
        } from '../controllers/orderController.js'
 import {
          getLineRequest,
-         saveLinePaymentResult,
+         getLineConfirm
        } from '../controllers/linepayController.js'
 import {
          protect,
@@ -34,8 +34,8 @@ router.route('/:id/cancel').put(protect, cancelOrder)
 router.route('/ecpay/:id/payment').post(protect, getECPayment)
 router.route('/ecpay/:id/saveECPaymentResult').post(saveECPaymentResult) //conducted by ECPay
 
-router.route('/linepay/:id/payment').post(protect, getLineRequest)
-router.route('/linepay/:id/saveLinePaymentResult').post(saveLinePaymentResult)
+router.route('/linepay/:id/request').post(protect, getLineRequest)
+router.route('/linepay/confirm').get(protect, getLineConfirm)
 
 
 export default router

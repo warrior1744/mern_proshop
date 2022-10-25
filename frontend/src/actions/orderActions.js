@@ -292,7 +292,7 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
                 },
                 timeout:10000,
             }
-            const {data} = await axios.post(`/api/orders/linepay/${orderId}/payment`, {}, config)
+            const {data} = await axios.post(`/api/orders/linepay/${orderId}/request`, {}, config)
             dispatch({
                 type: ORDER_LINEPAY_REQUEST_SUCCESS,
                 payload: data,
@@ -300,6 +300,35 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
         }catch (error){
             dispatch({
                 type: ORDER_LINEPAY_REQUEST_FAIL,
+                payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+            })
+        }
+    }
+
+    //The action comes from a new window so there won't be any other stats
+    export const getLineConfirm = (transactionId, orderId) => async(dispatch, getState) => {
+        try{
+            dispatch({ type: ORDER_LINEPAY_CONFIRM_REQUEST })
+            const { userLogin: { userInfo }} = getState()
+            const config = {
+                headers: {                
+                    'Content-Type' : 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                },
+                timeout:10000,
+            }
+            const {data} = await axios.get(`/api/orders/linepay/confirm?transactionId=${transactionId}&orderId=${orderId}`, config)
+
+            dispatch({
+                type: ORDER_LINEPAY_CONFIRM_SUCCESS,
+                payload: data,
+            })
+        }catch (error){
+            dispatch({
+                type: ORDER_LINEPAY_CONFIRM_FAIL,
                 payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

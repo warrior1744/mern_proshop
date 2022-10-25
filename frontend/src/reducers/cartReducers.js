@@ -17,7 +17,7 @@ export const cartReducer = (state = { cartItems: [], shippingAddress:{}}, action
                     //Add item to cart and comparing the id. 
                     //Iterate the cart, if exist, add Add item, if not, add the item that already in the cart
                 }
-            }else{
+            }else{ //Merge Array
                 return {
                     ...state,
                     cartItems: [...state.cartItems, actionItem]

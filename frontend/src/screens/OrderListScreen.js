@@ -58,6 +58,7 @@ const OrderListScreen = () => {
                     <th>TOTAL</th>
                     <th>PAID</th>
                     <th>DELIVERED</th>
+                    <th>CANCEL</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,6 +77,12 @@ const OrderListScreen = () => {
                         <td>
                         {order.isDelivered ? (
                           order.deliveredAt.substring(0, 10)
+                          ) : (<i className='fas fa-times' style={{color:'red'}}></i>
+                        )}
+                        </td>
+                        <td>
+                        {order.isCancelled ? (
+                          order.cancelledDate.substring(0, 10)
                           ) : (<i className='fas fa-times' style={{color:'red'}}></i>
                         )}
                         </td>

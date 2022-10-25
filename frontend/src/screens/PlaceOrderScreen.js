@@ -6,15 +6,12 @@ import Header from '../components/Header'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
-import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+
 
 
 //route '/placeorder'
 export const PlaceOrderScreen = () => {
 
-    // const addDecimals = (num) => {
-    //     return (Math.round(num * 100)/ 100).toFixed(2)
-    // }
     const cart = useSelector(state => state.cart)    
     cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     cart.shippingPrice = cart.itemsPrice > 1000 ? 0 : 100
@@ -28,7 +25,6 @@ export const PlaceOrderScreen = () => {
     useEffect(() => {
        
         if(success){
-            dispatch({ type: ORDER_CREATE_RESET})//when the order is created, reset it          
             navigate(`/order/${order._id}`)
         }
 

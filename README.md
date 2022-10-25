@@ -1,11 +1,13 @@
 Tip: using npm to install react boilerplate codes
+
 1. switch to your working directory for react (ex. ./frontend)
 2. run 'npx create-react-app frontend'
 3. after completed install, run 'npm start'
 
    Using ES7 React/Redux extension shortcut
-1. 'rafce'   React Arrow Function Components Export
-2. CSS link added to index.html
+
+4. 'rafce' React Arrow Function Components Export
+5. CSS link added to index.html
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -15,8 +17,8 @@ Tip: using npm to install react boilerplate codes
 5. import react-bootstrap and using Container, Navbar and Nav
 6. using Font Awesome Style to implement icon
 
-
 HomeScreen Product Listing
+
 1. built HomeScreen
 2. build products model
 3. import the model to Homescreen
@@ -25,29 +27,26 @@ HomeScreen Product Listing
 6. receiving props from HomeScreen
 7. using Card styling to Product components
 
-
 Rating Component
+
 1. built Rating Component and styling
 
 Implementing React Router
+
 1. 'npm install react-router-dom
 2. 'npm install react-router-bootstrap
 3. import react-router-dom react-router-boostrap on App.js
    ex: import { BrowserRouter as Router} from 'react-router-dom'
-4. import Routes, Route 
+4. import Routes, Route
 5. created routes and router for HomeScreen
 6. created ProductScreen Component
 7. created router for ProductScreen Component
 8. implement Link from 'react-router-dom' and using Link component
    on Product.js
 
+Product Detail Screen 9. Modify Links using LinkContainer on Header.js, removing href 10. use useParams() to obtain params from the component 11. ProductScreen component, show product details
 
-Product Detail Screen
-9. Modify Links using LinkContainer on Header.js, removing href
-10. use useParams() to obtain params from the component 
-11. ProductScreen component, show product details
-
-
+======================Backend: Express=========================
 Serving Product - Back-end Routes
 
 1. Create backend folder and take on initialization
@@ -63,25 +62,25 @@ Fetching Products from React (useEffect)
 4. using axios to fetch data
 5. important >>> (to read data from backend server to avoid CORS,
    you'll need proxy)
-   edit frontend/package.json, add   "proxy": "http://127.0.0.1:5000",
-   restart the react 
-
+   edit frontend/package.json, add "proxy": "http://127.0.0.1:5000",
+   restart the react
 
 Nodemon and Concurrently Setup
 
 1. npm install nodemon concurrently
 2. edit package.json in the root folder
 3. use the following setup
-    "scripts": {
-    "start": "node backend/server",
-    "server": "nodemon backend/server",
-    "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-    }
+   "scripts": {
+   "start": "node backend/server",
+   "server": "nodemon backend/server",
+   "client": "npm start --prefix frontend",
+   "dev": "concurrently \"npm run server\" \"npm run client\""
+   }
 
-    npm run dev
+   npm run dev
 
 Environment Variables
+
 1. npm install dotenv
 2. using dotenv.config()
 3. create .env file on the root folder
@@ -90,7 +89,6 @@ ECMAScript (ES) Modules in Node.js
 
 1. add "type":"module" to package.json of the root folder
 2. changing package implementation using ES style
-
 
 MongoDB Atlas and Compass Setup
 
@@ -135,23 +133,21 @@ Getting Started with Postman
 2. Examine on Postman GET and environment variable settings
 3. add middleware for error handling message
 
-
 Custome Error Handling
 
 1. added errorMiddleware to handle error messages
 
-
 An Overview of Redux, Creating a Redux Store
 
 1. install Redux DevTools Chrome extension
-2. npm install redux  (in frontend directory)
+2. npm install redux (in frontend directory)
 3. npm install react-redux (in frontend directory)
 4. npm install redux-thunk (in frontend directory)
 5. npm install redux-devtools-extension (in frontend directory)
 6. create store.js for Redux Store file, connect reducer, thunk middleware and other
 7. import Provider from 'react-redux
 8. import store.js
-9. render Provider with store states 
+9. render Provider with store states
 
 Product List Reducer and Action
 
@@ -173,7 +169,6 @@ Product Details Reducer and Action
 2. add productDetails key on the reducer
 3. use Selector on ProductScreen Component
 
-
 Quantity Select and Add to Cart Button
 
 1. create cartReducers.js, create cartConstants.js, create cartActions.js
@@ -181,12 +176,10 @@ Quantity Select and Add to Cart Button
 3. use useParams to retrieve query, useNavigate to route link
 4. create CartScreen Components
 
-
 Add to Cart Functionality
 
 1. create routes for CartScreen components
 2. apply useParams, useLocation, useDispatch, useSelector
-
 
 Cart Screen
 
@@ -211,20 +204,20 @@ User Authentication Endpoint (backend)
 2. apply the routes on server.js
 3. use bcrypt on userModel.js
 
-
 Generate a JSON Web Token (JWT) (backend)
 
 1. npm install jsonwebtoken
 2. create utils folder and create generateToken.js
-3. edit .env and implement  generateToken method on userController.js
+3. edit .env and implement generateToken method on userController.js
 
 Custom Authentication Middleware (backend)
 
-1. create authMiddleware.js, implement it with getUserProfile method 
-2. create routes for authMiddleware (checking the Token from the Headers) and  getUserProfile on userRoutes.js
-* This is to create middleware for authenticate the users but haven't yet save the Token
+1. create authMiddleware.js, implement it with getUserProfile method
+2. create routes for authMiddleware (checking the Token from the Headers) and getUserProfile on userRoutes.js
+
+- This is to create middleware for authenticate the users but haven't yet save the Token
   anywhere else for acquiring the access to certain protected routes.
-  We need to save the Token for the protected route use 
+  We need to save the Token for the protected route use
 
 Saving the Token in Postman (backend)
 
@@ -237,7 +230,7 @@ User Registration and Password Encryption (backend)
 
 User Login Reducer and Action (frontend)
 
-1. create userConstants.js and userReducers.js 
+1. create userConstants.js and userReducers.js
 2. import userReducers.js to store.js
 3. create userActions.js
 4. write userInfoFromStorage method to store userInfo into localStorage
@@ -247,7 +240,6 @@ User Login Screen and Functionality
 1. create a submit event handler on LoginScreen component
 2. create redirect page when userInfo is arrived
 3. create email and password submit form using react bootstrap
-
 
 Show the User in Navbar and Logout
 
@@ -357,13 +349,12 @@ Adding PayPal Payments 2022/06/14
 7. use PayPalButton from react-paypal-button-v2, (video 12:23)
 8. create successPaymentHandler method for PayPalButton and dispatch orderId and paymentResult to payOrder in orderActions.js
 
-
 Showing Orders on the Profile 2022/06/15
 
 1. On Backend, create getMyOrders controller method and create an order route '/myorders'
 2. create order list constants to orderConstants.js
 3. create orderListMyReducer method to orderReducers.js
-4. import orderListMyReducer and create orderMyList reducer to store.js 
+4. import orderListMyReducer and create orderMyList reducer to store.js
 5. create listMyOrders method to orderActions.js
 6. import listMyOrders method to ProfileScreen Component
 7. create orderMyList selector and orders view
@@ -381,7 +372,6 @@ Admin User List
 5. create a new NavDropdown to Header Component
 6. create Links to show userlist, product list and order list as admin login in the NavDropdown to Header Component
 7. create '/admin/userlist' route in App.js
-
 
 Admin Screen Access Security (Bug fix)
 
@@ -406,7 +396,7 @@ Getting a User by ID and Updating User Endpoints
 
 User Edit Screen and Getting User Details
 
-1. create USER_UPDATE_... constants to userConstants.js
+1. create USER*UPDATE*... constants to userConstants.js
 2. create updateUser action method to userActions.js
 3. create UserEditScreen Component and create Form for user details
 
@@ -416,7 +406,7 @@ Updating the User Functionality
 2. create userUpdate selector
 3. useEffect to dispatch data
 
-Admin Product List 
+Admin Product List
 
 1. create ProductListScreen Component
 2. useSelector productList for products to create the view in ProductListScreen Component
@@ -463,26 +453,25 @@ Front-end Image Upload
 Admin Order List
 
 1. create getOrders method and routes on backend
-2. create ORDER_LIST_... Constants to orderCanstants.js
+2. create ORDER*LIST*... Constants to orderCanstants.js
 3. create listOrders function to orderActions.js
 4. create ordersListReducer function to orderReducers.js
 5. import ordersListReducer to store.js
 6. create OrdersListScreen Component
 7. import listOrders action to the Component and add the route to App.js
-8. create view 
+8. create view
 
 Chapter 12
 Marking an Order as Delivered
 
 1. create updateOrderToDelivered function to orderController.js
 2. add updateOrderToDelivered route to orderRoutes.js
-3. create ORDER_DELIVER_... constants to orderConstants.js
+3. create ORDER*DELIVER*... constants to orderConstants.js
 4. create deliverOrder function to orderActions.js
 5. create orderDeliverReducer function to orderReducers.js
 6. add orderDeliverReducer to store.js
-7. use Select orderDeliver to OrderScreen Component 
+7. use Select orderDeliver to OrderScreen Component
 8. create deliverHandler button to dispatch deliverOrder on OrderScreen Component
-
 
 Chapter 13
 Morgan and Creating Review Endpoint
@@ -494,7 +483,7 @@ Morgan and Creating Review Endpoint
 Chapter 13
 Front-end Product reviews
 
-1. create PRODUCT_CREATE_REVIEW_... constants to productConstants.js
+1. create PRODUCT*CREATE_REVIEW*... constants to productConstants.js
 2. create productReviewCreateReducer function to productReducers.js
 3. add productReviewCreateReducer to store.js
 4. create createProductReview function to productActions.js
@@ -525,7 +514,7 @@ Product Pagination
 Chapter 13
 Creating a Products Carousel
 
-1. create getTopProducts function to productController.js 
+1. create getTopProducts function to productController.js
 2. create '/api/products/top' route
 3. create listTopProducts function to productionAction.js
 4. create productTopRatedReducer function to productReducers.js
@@ -550,9 +539,8 @@ Chapter 15
 Deploying to Heroku
 
 1. check .env in gitignore, and /build folder
-2. register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
-=======================================================================
-3. go to the project root folder, type "heroku login" 
+2. # register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
+3. go to the project root folder, type "heroku login"
 4. "heroku create [unique app name]" to create an app in your heroku account
 5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
 6. add environment variables to heroku before the deployment
@@ -563,38 +551,36 @@ Deploying to Heroku
 
 7. modify package.json with engine version
 
-  important: node version must meet npm version on package.json
-             
-             
-  "engines": {
-    "npm": "8.3.1",
-    "node": "^16.14.0"
-  },
+important: node version must meet npm version on package.json
 
-8. modify package.json script key 
-      "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+"engines": {
+"npm": "8.3.1",
+"node": "^16.14.0"
+},
+
+8. modify package.json script key
+   "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
 9. "git add ." then "git commit" and "git push" to your own repository
 10. "heroku git:remote -a [your app name]"
 11. "git push heroku master"
 12. finally add the .dev variables to heroku in the app -> settings -> Config Vars
-13. "heroku logs --tail" to check the status
-=====================================================================
+13. # "heroku logs --tail" to check the status
 
 Improvements 1: Cancel Order function
 
 1. Backend: add cancel models in orderModel.js done
-2. add cancelOrder function in orderController.js   done
+2. add cancelOrder function in orderController.js done
 3. orderRoutes.js, add PUT /api/orders/:id/cancel and use tokens done
-4. Frontend: create orderConstants ORDER_CANCEL_... done
+4. Frontend: create orderConstants ORDER*CANCEL*... done
 5. orderReducer.js, create orderCancelReducer reducer
 6. orderAction.js, create cancelOrder action
-7. create CancelOrderScreen.js in screens folder  done
+7. create CancelOrderScreen.js in screens folder done
 8. App.js, import CancelOrderScreen component and add it to route
    '/cancel/:id'
-9. CancelOrderScreen.js, 
-   import stats from the store 
+9. CancelOrderScreen.js,
+   import stats from the store
    import cancelOrder() and emptyCart() from the actions
-   render the order status (to be removed) 
+   render the order status (to be removed)
 10. auto redirect to other page if success or failed
 
 Improvements 2: Modify product quantity when its delivered
@@ -604,18 +590,13 @@ Improvements 2: Modify product quantity when its delivered
 13. Frontend: create update updateProductQtyByOrder function in productActions.js
 14. OrderScreen.js, import updateProductQtyByOrder and apply in deliverHandler
 
-Improvements 3: ProductScreen.js AddToCart issue
-15. use dispatch addToCart instead of passing params to CartScreen component
-16. Dont navigate to CartScreen when user added any product to the cart
-17. add a span on the Cart icon in Header component and 
-    show the quantity of the cart items 
-    (Header component needs cart stats)
-    (index.css added the cart indicator badge style)
-
-
+Improvements 3: ProductScreen.js AddToCart issue 15. use dispatch addToCart instead of passing params to CartScreen component 16. Dont navigate to CartScreen when user added any product to the cart 17. add a span on the Cart icon in Header component and
+show the quantity of the cart items
+(Header component needs cart stats)
+(index.css added the cart indicator badge style)
 
 Bug 1: file uploading to heroku issue
-context: 
+context:
 The issue with the photo uploading to Heroku is only bad because when they run dynos on your server their "cycle" cleans the uploaded files. The solution I am proposing will allow you to upload your photos to Cloudinary and then use that url for your photos return path.
 
 You actually don't have to change anything in your files, you actually want to follow the tutorial until you are successfully uploading images.
@@ -623,9 +604,9 @@ You actually don't have to change anything in your files, you actually want to f
 Once you can upload imagees you will want to open a developer Cloudinary account (free) Cloudinay Dev account register.
 
 1. In your env file you want to add these properties
-CLOUD_NAME = use-your-bucket-name-here-when-creating-bucket
-CLOUD_API_KEY = api-key-from-cloudinary
-CLOUD_API_SECRET = api-secret-from-cloudinary
+   CLOUD_NAME = use-your-bucket-name-here-when-creating-bucket
+   CLOUD_API_KEY = api-key-from-cloudinary
+   CLOUD_API_SECRET = api-secret-from-cloudinary
 
 2. npm i cloudinary
 3. server.js, import pkg from 'cloudinary'
@@ -636,13 +617,11 @@ CLOUD_API_SECRET = api-secret-from-cloudinary
 
 Bug2: ProductListScreen refresh not consistent
 
-1. 
-
-
+1.
 
 ECpay html string include script tag
 
-"<form id="_form_aiochk" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post"><input type="hidden" name="MerchantTradeNo" id="MerchantTradeNo" value="8b99c9a780ea8a78b8a8" /><input type="hidden" name="MerchantTradeDate" id="MerchantTradeDate" value="2022/07/01 10:57:16" /><input type="hidden" name="TotalAmount" id="TotalAmount" value="2222" /><input type="hidden" name="TradeDesc" id="TradeDesc" value="tradedesc" /><input type="hidden" name="ItemName" id="ItemName" value="xyzz" /><input type="hidden" name="ReturnURL" id="ReturnURL" value="https://meadowlark1984.herokuapp.com/REST/ecpay/returnResult" /><input type="hidden" name="ClientBackURL" id="ClientBackURL" value="https://meadowlark1984.herokuapp.com" /><input type="hidden" name="ChoosePayment" id="ChoosePayment" value="ALL" /><input type="hidden" name="PlatformID" id="PlatformID" value="" /><input type="hidden" name="MerchantID" id="MerchantID" value="2000132" /><input type="hidden" name="InvoiceMark" id="InvoiceMark" value="N" /><input type="hidden" name="IgnorePayment" id="IgnorePayment" value="" /><input type="hidden" name="DeviceSource" id="DeviceSource" value="" /><input type="hidden" name="EncryptType" id="EncryptType" value="1" /><input type="hidden" name="PaymentType" id="PaymentType" value="aio" /><input type="hidden" name="CheckMacValue" id="CheckMacValue" value="84499E54AE44AD3936DBA0E8DD90F84DE63EA9CEAB41B25859BE6A13D7B5F1EB" /><script type="text/javascript">document.getElementById("_form_aiochk").submit();</script></form>"
+"<form id="_form_aiochk" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post"><input type="hidden" name="MerchantTradeNo" id="MerchantTradeNo" value="8b99c9a780ea8a78b8a8" /><input type="hidden" name="MerchantTradeDate" id="MerchantTradeDate" value="2022/07/01 10:57:16" /><input type="hidden" name="TotalAmount" id="TotalAmount" value="2222" /><input type="hidden" name="TradeDesc" id="TradeDesc" value="tradedesc" /><input type="hidden" name="ItemName" id="ItemName" value="xyzz" /><input type="hidden" name="ReturnURL" id="ReturnURL" value="https://meadowlark1984.herokuapp.com/REST/ecpay/returnResult" /><input type="hidden" name="ClientBackURL" id="ClientBackURL" value="https://meadowlark1984.herokuapp.com" /><input type="hidden" name="ChoosePayment" id="ChoosePayment" value="ALL" /><input type="hidden" name="PlatformID" id="PlatformID" value="" /><input type="hidden" name="MerchantID" id="MerchantID" value="2000132" /><input type="hidden" name="InvoiceMark" id="InvoiceMark" value="N" /><input type="hidden" name="IgnorePayment" id="IgnorePayment" value="" /><input type="hidden" name="DeviceSource" id="DeviceSource" value="" /><input type="hidden" name="EncryptType" id="EncryptType" value="1" /><input type="hidden" name="PaymentType" id="PaymentType" value="aio" /><input type="hidden" name="CheckMacValue" id="CheckMacValue" value="84499E54AE44AD3936DBA0E8DD90F84DE63EA9CEAB41B25859BE6A13D7B5F1EB" /><script type="text/javascript">document.getElementById("\_form_aiochk").submit();</script></form>"
 
 <!-- ECpayment callback result
  {
@@ -664,8 +643,6 @@ ECpay html string include script tag
    "TradeNo":"2207061653564471",
    "CheckMacValue":"4C1D2C4E52465D3F51D946C47B2ECBE3A09827583533A280FFA736C34ECC058B"
  } -->
-
-
 
 <!-- PayPal returned message
 
