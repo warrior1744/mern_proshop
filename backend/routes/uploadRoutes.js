@@ -2,12 +2,10 @@ import express from 'express'
 import multer from 'multer'
 import path from 'path'
 import asyncHandler from 'express-async-handler'
-import pkg from 'cloudinary'
-const cloudinary = pkg
+import cloudinary from 'cloudinary'
 
 
 const router = express.Router()
-
 
 //https://betterprogramming.pub/a-complete-guide-of-file-uploading-in-javascript-2c29c61336f5
 const storage = multer.diskStorage({
