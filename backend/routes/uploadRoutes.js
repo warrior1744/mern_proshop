@@ -2,9 +2,9 @@ import express from 'express'
 import multer from 'multer'
 import path from 'path'
 import asyncHandler from 'express-async-handler'
-// import pkg from 'cloudinary'
-// const cloudinary = pkg
-import { v2 as cloudinary } from 'cloudinary'
+import pkg from 'cloudinary'
+const cloudinary = pkg
+
 
 const router = express.Router()
 
@@ -24,6 +24,7 @@ function checkFileType(file, cb){
     const filetypes =  /jpg|jpeg|png/
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
     const mimetype = filetypes.test(file.mimetype)
+
     if(extname && mimetype){
         return cb(null, true)
     }else{
@@ -38,26 +39,10 @@ const upload = multer({
     }
 })
 
-// router.post('/', upload.single('image'), (req, res, next) => {
-  
-//        cloudinary.uploader.upload(`${req.file.path}`).then(
-//          uploadPhoto => {
-//             res.send(uploadPhoto.url)
-//          }).catch(next)
-// })
 
 router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
-
-    try{ 
-        const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
-        console.log(`uploadPhoto >>> /${uploadPhoto}`)
-        console.log(`uploadPhoto.url >>> ${uploadPhoto.url}`)
-        res.send(uploadPhoto.url)
-
-    }catch(err){
-        console.log('Error occured in uploading files', err)
-        return res.sendStatus(500)
-    }
+    const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
+    res.send(uploadPhoto.url)
 }))
 
 export default router

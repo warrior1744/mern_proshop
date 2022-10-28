@@ -75,7 +75,6 @@ const ProductEditScreen = () => {
         setImage(data)
         setUploading(false)
       }catch (error){
-        console.error(`uploadFileHandler error >>> ${error}`)
         setUploading(false)
       }
     }
