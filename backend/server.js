@@ -14,12 +14,12 @@ import cors from 'cors'
 
 import pkg from 'cloudinary'
 const cloudinary = pkg
-
-app.use(cors())
-dotenv.config()
-connectDB()
 const app = express()
 
+
+dotenv.config()
+connectDB()
+app.use(cors())
 if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
 }
