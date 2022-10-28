@@ -70,7 +70,7 @@ const deleteProductById = asyncHandler (async (req, res) => {
     }
 })
 
-// @desc Update a product by ID
+// @desc Add a product by ID
 // @route POST /api/products/:id
 // @access Private/Admin
 
@@ -96,8 +96,7 @@ const createProduct = asyncHandler(async(req, res) =>{
 // @access Private/Admin
 
 const updateProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id)
-    const productName =''
+
     const {
         name,
         price,
@@ -108,8 +107,8 @@ const updateProduct = asyncHandler(async (req, res) => {
         countInStock,
     } = req.body
 
+    const product = await Product.findById(req.params.id)
     if(product){
-        product.Name = product.name
         product.name = name 
         product.price = price
         product.description = description
@@ -124,7 +123,7 @@ const updateProduct = asyncHandler(async (req, res) => {
         })
     }else{
         res.status(404)
-        throw new Error(`Failed updating ${productName}`)
+        throw new Error(`Failed updating ${name}`)
     }
 })
 
