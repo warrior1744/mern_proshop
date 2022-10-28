@@ -12,8 +12,7 @@ import connectDB from './config/db.js'
 import {engine} from 'express-handlebars'
 import cors from 'cors'
 
-import pkg from 'cloudinary'
-const cloudinary = pkg
+import {v2 as cloudinary} from 'cloudinary'
 const app = express()
 
 

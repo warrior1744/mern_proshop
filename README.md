@@ -533,23 +533,23 @@ Preparing for Deployment
 
 1. stop the server and switch to frontend folder
 2. npm run build
-3. create route for the index.html in the static folder (build folder)
+3. # create route for the index.html in the static folder (build folder)
 
-Chapter 15
-Deploying to Heroku
+   Chapter 15
+   Deploying to Heroku
 
-1. check .env in gitignore, and /build folder
-2. # register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
-3. go to the project root folder, type "heroku login"
-4. "heroku create [unique app name]" to create an app in your heroku account
-5. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
-6. add environment variables to heroku before the deployment
+4. check .env in gitignore, and /build folder
+5. # register to Heroku and install Heroku Cli (type "heroku --version" to check, upgrading to latest version, type heroku upgrade )
+6. go to the project root folder, type "heroku login"
+7. "heroku create [unique app name]" to create an app in your heroku account
+8. add Procfile in the root folder (ex. Procfile >> "web:node backend/server.js")
+9. add environment variables to heroku before the deployment
    execute the following commands
 
    $ heroku config:set USE_NPM_INSTALL=true -a <Your app name>
    $ heroku config:set NODE_MODULES_CACHE=false -a <Your app name>
 
-7. modify package.json with engine version
+10. modify package.json with engine version
 
 important: node version must meet npm version on package.json
 
