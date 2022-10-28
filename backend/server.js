@@ -1,32 +1,21 @@
-// commonJS style
-// const express = require('express')
-// const dotenv = require('dotenv')
-// const products = require('./data/products')
-
-//ECMAScript (ES) Modules in Node.js
 import path from 'path'
 import express from 'express'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 import colors from 'colors'
-
-import {engine} from 'express-handlebars'
-import cors from 'cors'
-
-// import pkg from 'cloudinary'
-// const cloudinary = pkg
-
-import { v2 as cloudinary } from 'cloudinary'
-
-// import products from './data/products.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import { notFound, errorHandler} from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
+import {engine} from 'express-handlebars'
+import cors from 'cors'
 
+import pkg from 'cloudinary'
+const cloudinary = pkg
 
+app.use(cors())
 dotenv.config()
 connectDB()
 const app = express()
@@ -35,17 +24,15 @@ if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
 }
 
+app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
+app.use(express.urlencoded({extended: false}))
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
 })
-
-app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
-app.use(express.urlencoded({extended: false}))
-
-// app.use('/api', cors())//chapter15
 
 const __dirname = path.resolve() // D:\Dropbox\Dev\WebDev\MERN_E-commerce\proshop
 
