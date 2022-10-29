@@ -33,14 +33,13 @@ cloudinary.config({
     secure: true,
 })
 
-const __dirname = path.resolve() // D:\Dropbox\Dev\WebDev\MERN_E-commerce\proshop
+const __dirname = path.resolve()
 
-app.engine('handlebars', engine({  //configure Handlebars view engine by specifing the default layout 'main'
-    defaultLayout: "main"
-  }));//you can change the extension to .hbs by giving a new instance {extname: '.hbs'}
-// app.set('view cache', true)
-app.set('views', path.join(__dirname, 'backend/views'));
-app.set('view engine', 'handlebars')
+// app.engine('handlebars', engine({ 
+//     defaultLayout: "main"
+//   }));
+// app.set('views', path.join(__dirname, 'backend/views'));
+// app.set('view engine', 'handlebars')
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
