@@ -32,4 +32,4 @@ yarn-error.log*
 login.md
 
 # file uploads
-/uploads
+/uploads/*
