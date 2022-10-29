@@ -26,20 +26,20 @@ if (process.env.NODE_ENV === 'development'){
 app.use(express.json()) //accept json format in the body. replaced bodyParser.json() since the new release
 app.use(express.urlencoded({extended: false}))
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true,
-})
+// cloudinary.config({
+//     cloud_name: process.env.CLOUDINARY_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET,
+//     secure: true,
+// })
 
 const __dirname = path.resolve()
 
-// app.engine('handlebars', engine({ 
-//     defaultLayout: "main"
-//   }));
-// app.set('views', path.join(__dirname, 'backend/views'));
-// app.set('view engine', 'handlebars')
+app.engine('handlebars', engine({ 
+    defaultLayout: "main"
+  }));
+app.set('views', path.join(__dirname, 'backend/views'));
+app.set('view engine', 'handlebars')
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
