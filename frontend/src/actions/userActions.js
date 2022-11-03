@@ -37,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
                 'Content-Type':'application/json',
             }
         }
-        const { data } = await axios.post('/api/users/login', { email, password}, config) //user id, name, email isAdmin and token
+        const { data } = await axios.post('/api/users/login', { email, password}, config)
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data})
         localStorage.setItem('userInfo', JSON.stringify(data))
     }catch (error){
@@ -103,7 +103,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         const { userLogin: { userInfo }} = getState()
         const config = {
             headers: {
-                // 'Content-Type':'application/json',
                 Authorization: `Bearer ${userInfo.token}`
             }
         }

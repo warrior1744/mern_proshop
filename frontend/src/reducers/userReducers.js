@@ -28,7 +28,6 @@ import {
   
 } from '../constants/userConstants'
 
-
 export const userLoginReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUEST:
@@ -87,7 +86,7 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     }
 }
 
-export const userListReducer = (state = {users: []}, action) => {
+export const userListReducer = (state = {}, action) => {
     switch (action.type){
         case USER_LIST_REQUEST:
             return { loading: true}
@@ -96,8 +95,7 @@ export const userListReducer = (state = {users: []}, action) => {
         case USER_LIST_FAIL:
             return { loading: false, error: action.payload}
         case USER_LIST_RESET:
-            return { users: []}
-            return 
+            return {}
         default:
             return state
     }

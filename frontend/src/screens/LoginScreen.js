@@ -23,9 +23,9 @@ const LoginScreen = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { loading, error, userInfo} = userLogin
 
-    const submitHandler = (e) => { //execute when user clicked Sign On
+    const submitHandler = (e) => { 
         e.preventDefault()
-        dispatch(login(email, password)) //pass to Actions
+        dispatch(login(email, password)) 
     }
 
     useEffect(() => {

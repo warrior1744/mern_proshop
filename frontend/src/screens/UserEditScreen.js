@@ -5,7 +5,7 @@ import {useDispatch, useSelector } from 'react-redux'
 import Header from '../components/Header'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getUserDetails, updateUser  } from '../actions/userActions'
+import { getUserDetails, updateUser, listUsers  } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { USER_UPDATE_RESET} from '../constants/userConstants'
 
@@ -32,6 +32,7 @@ const UserEditScreen = () => {
         dispatch({
           type: USER_UPDATE_RESET
         })
+
         navigate('/admin/userlist')
       }else{
             if(!user.name || user._id !== userId){

@@ -54,7 +54,6 @@ const HomeScreen = () => {
               </>
                 )  
         }
-             {/* <div><img src= {process.env.PUBLIC_URL +"\\images\\nude.jpg"} /></div>  */}
     </>
   )
 }

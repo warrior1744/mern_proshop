@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button} from 'react-bootstrap'
@@ -11,12 +11,12 @@ import { listUsers, deleteUser  } from '../actions/userActions'
 
 //route '/admin/userList'
 const UserListScreen = () => {
+
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
    const userList = useSelector(state => state.userList)
    const { loading, error, users} = userList
-
    const userLogin = useSelector(state => state.userLogin)
    const { userInfo } = userLogin
 
@@ -24,6 +24,7 @@ const UserListScreen = () => {
    const { success:successDelete } = userDelete
 
    useEffect(() => {
+
         if(userInfo && userInfo.isAdmin){
             dispatch(listUsers())
         }else{
@@ -55,7 +56,8 @@ const UserListScreen = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => (
+                {users &&
+                    (users.map(user => (
                         <tr key={user._id}>
                             <td>{user._id}</td>
                             <td>{user.name}</td>
@@ -81,7 +83,7 @@ const UserListScreen = () => {
                                 }
                             </td>
                         </tr>
-                    ))}
+                    )))}
                 </tbody>
             </Table>
         )}

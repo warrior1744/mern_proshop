@@ -4,7 +4,6 @@ import User from '../models/userModel.js'
 
 const protect = AsyncHandler(async( req, res, next) => {
     let token
-    //req comes from frontend headers
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
     {
         try{
