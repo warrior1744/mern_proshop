@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/') 
     },
     filename(req, file, cb){
+        console.log('file', file)
         const filename = `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
         cb(null, filename)
     }
@@ -40,6 +41,7 @@ const upload = multer({
 
 router.post('/', upload.single('image'), asyncHandler(async (req, res) => {
     const uploadPhoto = await cloudinary.uploader.upload(`${req.file.path}`)
+    console.log('req.file', req.file)
     console.log(uploadPhoto)
     console.log(uploadPhoto.url)
     res.send(uploadPhoto.url)

@@ -57,6 +57,7 @@ const reducer = combineReducers({
     orderLineConfirm: getLineConfirmReducer,
 }) //reducers for products , cart, users and orders
 
+
 const cartItemsFromStorage = localStorage.getItem('cartItems') 
                              ? JSON.parse(localStorage.getItem('cartItems')) 
                              : []
