@@ -64,6 +64,7 @@ const ProductListScreen = () => {
     createdProduct,
     pageNumber,
     OnAdminProductListScreen,
+    successDelete
   ]);
 
   const deleteHandler = (id, name) => {
