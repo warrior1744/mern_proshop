@@ -221,7 +221,9 @@ const onTimeValue = function () {
 //Valid  12/25
 //Secure  222
 const getECPayment = asyncHandler(async (req, res) => {
-  const options = JSON.parse(process.env.ECPAY_OPTIONS);
+  const ecpay_options = '{"OperationMode": "Test","MercProfile": {"MerchantID":"2000132", "HashKey":"5294y06JbISpM5x9","HashIV": "v77hoKGq4kWxNNIS"},"IgnorePayment": [],"IsProjectContractor": false}'
+
+  const options = JSON.parse(ecpay_options);
   const order = await Order.findById(req.params.id);
   if (order) {
     let resultOrder = "";
