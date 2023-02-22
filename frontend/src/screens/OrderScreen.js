@@ -96,7 +96,7 @@ export const OrderScreen = () => {
       if (ecpay.result) {
         localStorage.setItem("ecpayState", ecpay.result);
       }
-      dispatch({ ORDER_ECPAY_RESET });
+      dispatch({ type: ORDER_ECPAY_RESET });
       window.open("/ecpay", "_blank", "noreferrer");
     }
 
@@ -111,22 +111,22 @@ export const OrderScreen = () => {
       dispatch(getOrderDetails(orderId));
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
-    }
-
-    if (
-      order.paymentMethod === "ecPay" &&
-      order.paymentResult.status === "交易成功"
-    ) {
-      console.log("ecpay is successfully handled");
-    }
-
-    if (order.paymentMethod === "linePay" && !order.isPaid && lineSuccess) {
-      if (linepay.returnMessage === "Success.") {
-        window.open(linepay.info.paymentUrl.web, "_blank");
-        // dispatch({ type: ORDER_LINEPAY_REQUEST_RESET})
+    } else {
+      if (
+        order.paymentMethod === "ecPay" &&
+        order.paymentResult.status === "交易成功"
+      ) {
+        console.log("ecpay is successfully handled");
       }
 
-      //   //confirmUrl -> https://example.com/?transactionId=2022092100727542210&orderId=linepay632ab4989445ccf0bd4f4b6a
+      if (order.paymentMethod === "linePay" && !order.isPaid && lineSuccess) {
+        if (linepay.returnMessage === "Success.") {
+          window.open(linepay.info.paymentUrl.web, "_blank");
+          // dispatch({ type: ORDER_LINEPAY_REQUEST_RESET})
+        }
+
+        //   //confirmUrl -> https://example.com/?transactionId=2022092100727542210&orderId=linepay632ab4989445ccf0bd4f4b6a
+      }
     }
   }, [
     successOrderCancel,
