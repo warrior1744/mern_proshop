@@ -1,82 +1,87 @@
-import React, {useState} from 'react'
-import { useNavigate} from 'react-router-dom'
-import { Form, Button, Col} from 'react-bootstrap'
-import {useDispatch, useSelector } from 'react-redux'
-import FormContainer from '../components/FormContainer'
-import CheckoutSteps from '../components/CheckoutSteps'
-import Header from '../components/Header'
-import { savePaymentMethod } from '../actions/cartActions'
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import FormContainer from "../components/FormContainer";
+import CheckoutSteps from "../components/CheckoutSteps";
+import Header from "../components/Header";
+import { savePaymentMethod } from "../actions/cartActions";
 
 //route '/payment'
 const PaymentScreen = () => {
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress, paymentMethod: savedPaymentMethod } = cart;
+  const [paymentMethod, setPaymentMethod] = useState(
+    savedPaymentMethod || "PayPal"
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const dispatch = useDispatch()
-const navigate = useNavigate()
+  useEffect(() => {
+    if (!shippingAddress) {
+      navigate("/shipping");
+    }
 
-const cart = useSelector(state => state.cart) //bugs appear here, cart info needs to be updated
-const { shippingAddress } = cart
+  }, [navigate]);
 
-if(!shippingAddress){
-  navigate('/shipping')
-}
+  const submitHandler = (e) => {
+    e.preventDefault();
+    navigate("/login?redirect=placeorder");
+  };
 
-const [paymentMethod, setPaymentMethod] = useState('PayPal')
-
-
-const submitHandler = (e) => {
-  e.preventDefault()
-  dispatch(savePaymentMethod(paymentMethod))
-  navigate('/login?redirect=placeorder')
-}
+  const setPaymentMethodHandler = (e) => {
+    setPaymentMethod(e.target.value)
+    dispatch(savePaymentMethod(e.target.value));
+  }
 
   return (
     <>
-      <Header/>
+      <Header />
       <FormContainer>
-        <CheckoutSteps step1 step2 step3/>
+        <CheckoutSteps step1 step2 step3 />
         <h1>Payment Method</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group>
-            <Form.Label as='legend'>Select Method</Form.Label>
-          <Col>
-            <Form.Check 
-              type='radio'
-              label='PayPal or Credit Card'
-              id='PayPal'
-              name='paymentMethod'
-              value='PayPal'
-              checked 
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
+            <Form.Label as="legend">Select Method</Form.Label>
+            <Col>
+              <Form.Check
+                type="radio"
+                label="PayPal or Credit Card"
+                id="PayPal"
+                name="PayPal"
+                value="PayPal"
+                checked={paymentMethod === 'PayPal'}
+                onChange={(e) => setPaymentMethodHandler(e)}
+              ></Form.Check>
 
-            <Form.Check 
-              type='radio'
-              label='ecpay or Credit Card'
-              id='ecPay'
-              name='paymentMethod'
-              value='ecPay'
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
+              <Form.Check
+                type="radio"
+                label="ecpay or Credit Card"
+                id="ecPay"
+                name="ecPay"
+                value="ecPay"
+                checked={paymentMethod === 'ecPay'}
+                onChange={(e) => setPaymentMethodHandler(e)}
+              ></Form.Check>
 
-            <Form.Check 
-              type='radio'
-              label='LINEpay'
-              id='linePay'
-              name='paymentMethod'
-              value='linePay'
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
-
-          </Col>
+              <Form.Check
+                type="radio"
+                label="LINEpay"
+                id="linePay"
+                name="linePay"
+                value="linePay"
+                checked={paymentMethod === 'linePay'}
+                onChange={(e) => setPaymentMethodHandler(e)}
+              ></Form.Check>
+            </Col>
           </Form.Group>
-          <Button type='submit' variant='primary'>
+          <Button type="submit" variant="primary">
             Continue
           </Button>
         </Form>
       </FormContainer>
     </>
-  )
-}
+  );
+};
 
-export default PaymentScreen
+export default PaymentScreen;

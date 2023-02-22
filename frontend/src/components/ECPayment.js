@@ -1,30 +1,29 @@
-
-import React, { useRef, useEffect} from 'react'
-import {  useSelector } from 'react-redux'
-
-
+import React, { useState, useRef, useEffect } from "react";
 
 const ECPayment = () => {
+  const [ecpayState, setEcpayState] = useState(
+    localStorage.getItem("ecpayState")
+  );
 
-  const ecpayScreen = useSelector((state) => state.orderECPayment)
-  const { loading: ecpayLoading, success: ecpaySuccess, ecpay} = ecpayScreen
-  const contentRef = useRef()
+  const contentRef = useRef();
 
   useEffect(() => {
-    const fragment = document.createRange().createContextualFragment(ecpay.result)
+    const fragment = document
+      .createRange()
+      .createContextualFragment(ecpayState);
 
-    if(contentRef.current){
-      contentRef.current.appendChild(fragment)
-    }else{
-      return
+    if (contentRef.current) {
+      contentRef.current.appendChild(fragment);
+    } else {
+      return;
     }
-  })
 
-  return (
+    return () => {
+      localStorage.removeItem("ecpayState")
+    }
+  });
 
-    <div ref={contentRef}/>
+  return <div ref={contentRef} />;
+};
 
-  )
-}
-
-export default ECPayment
+export default ECPayment;

@@ -1,6 +1,6 @@
 
 import React, {  useEffect} from 'react'
-import { Link, useParams, useNavigate, useLocation} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem, Form} from 'react-bootstrap'
 import Header from '../components/Header'
